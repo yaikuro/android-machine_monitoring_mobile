@@ -1,0 +1,2 @@
+rootProject.name='android-machine_monitoring_mobile'
+include ':app'

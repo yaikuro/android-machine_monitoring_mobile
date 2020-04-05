@@ -1,0 +1,77 @@
+{
+  "project_info": {
+    "project_number": "825958311459",
+    "firebase_url": "https://smart-machine-monitoring-3221.firebaseio.com",
+    "project_id": "smart-machine-monitoring-3221",
+    "storage_bucket": "smart-machine-monitoring-3221.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:825958311459:android:bffa09201c347df5cab396",
+        "android_client_info": {
+          "package_name": "com.app.android_machine_monitoring_mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "825958311459-693210ijc47m4h5jonal20o4tnu90d9n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.android_machine_monitoring_mobile",
+            "certificate_hash": "3819ba7548351de74463f6f3ed4a0e00482d9f9e"
+          }
+        },
+        {
+          "client_id": "825958311459-afbcrirj35vaaukotlld5ng1b5eq7eao.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXFCpY7lJA3PGfMrBx0osR_L7TcNfbuHM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "825958311459-afbcrirj35vaaukotlld5ng1b5eq7eao.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:825958311459:android:e7e966cc9f73597dcab396",
+        "android_client_info": {
+          "package_name": "com.app.flutter_smart_machine_monitoring"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "825958311459-afbcrirj35vaaukotlld5ng1b5eq7eao.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXFCpY7lJA3PGfMrBx0osR_L7TcNfbuHM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "825958311459-afbcrirj35vaaukotlld5ng1b5eq7eao.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
