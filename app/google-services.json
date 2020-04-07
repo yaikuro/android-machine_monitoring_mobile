@@ -8,18 +8,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:825958311459:android:bffa09201c347df5cab396",
+        "mobilesdk_app_id": "1:825958311459:android:80f1fe420ad64f1acab396",
         "android_client_info": {
           "package_name": "com.app.android_machine_monitoring_mobile"
         }
       },
       "oauth_client": [
         {
-          "client_id": "825958311459-693210ijc47m4h5jonal20o4tnu90d9n.apps.googleusercontent.com",
+          "client_id": "825958311459-3cnfe4igt09h71qqs7b0itrlousvcuu2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.app.android_machine_monitoring_mobile",
-            "certificate_hash": "3819ba7548351de74463f6f3ed4a0e00482d9f9e"
+            "certificate_hash": "7bc7656fba726d1632260b1513cc9812c45933f6"
           }
         },
         {
