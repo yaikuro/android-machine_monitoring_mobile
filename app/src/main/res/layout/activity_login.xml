@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity"
-    android:layout_margin="10dp">
+    tools:context=".LoginActivity">
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
@@ -27,6 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/id"
+        android:layout_margin="10dp"
         app:boxCornerRadiusBottomEnd="20dp"
         app:boxCornerRadiusBottomStart="20dp"
         app:boxCornerRadiusTopEnd="20dp"
@@ -54,6 +54,7 @@
         android:layout_marginTop="20dp"
         android:hint="@string/password"
         app:endIconMode="password_toggle"
+        android:layout_margin="10dp"
         app:boxCornerRadiusBottomEnd="20dp"
         app:boxCornerRadiusBottomStart="20dp"
         app:boxCornerRadiusTopEnd="20dp"
@@ -71,24 +72,28 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <ProgressBar
-        android:id="@+id/pbbar_login"
-        android:layout_width="wrap_content"
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:indeterminate="true"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialEditTextPassword" />
+        app:layout_constraintTop_toBottomOf="?attr/actionBarSize" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnSignIn"
-        android:layout_width="200dp"
+        android:id="@+id/btnSignInEmail"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="@string/sign_in"
+        android:textSize="15sp"
         app:cornerRadius="17dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pbbar_login"
+        app:layout_constraintTop_toBottomOf="@+id/materialEditTextPassword"
         app:layout_constraintVertical_bias="0.205" />
 
     <com.google.android.material.textview.MaterialTextView
@@ -99,7 +104,7 @@
         android:text="@string/or"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSignIn" />
+        app:layout_constraintTop_toBottomOf="@+id/btnSignInEmail" />
 
 
     <com.google.android.material.button.MaterialButton
@@ -107,14 +112,41 @@
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="60dp"
         android:layout_height="70dp"
-        app:cornerRadius="70dp"
         android:drawableLeft="@drawable/google_icon_resized"
+        app:cornerRadius="70dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/materialTextView"
+        app:layout_constraintVertical_bias="0.347" />
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/materialTextViewRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/don_t_have_an_account"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSignInGoogle" />
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txtRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/register"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.056"
+        app:layout_constraintStart_toEndOf="@id/materialTextViewRegister"
+        app:layout_constraintTop_toBottomOf="@+id/btnSignInGoogle" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

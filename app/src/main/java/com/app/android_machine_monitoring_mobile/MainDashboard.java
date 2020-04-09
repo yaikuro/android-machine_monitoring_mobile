@@ -5,17 +5,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,11 +21,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-public class MainDashboard extends AppCompatActivity {
+public class MainDashboard extends BaseActivity implements View.OnClickListener {
     private GoogleSignInClient mGoogleSignInclient;
     private String TAG = "MainActivity";
     private FirebaseAuth mAuth;
-    private Button btnSignOut;
     private int RC_SIGN_IN = 1;
 
     @Override
@@ -38,33 +33,19 @@ public class MainDashboard extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance();
-        btnSignOut = findViewById(R.id.sign_out);
-
-
-
-        btnSignOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAuth.signOut();
-                Intent i = new Intent(MainDashboard.this, LoginActivity.class);
-                                startActivity(i);
-                                finish();
-                Toast.makeText(MainDashboard.this, "Signed Out", Toast.LENGTH_SHORT).show();
-//                btnSignOut.setVisibility(View.INVISIBLE);
-            }
-        });
+        findViewById(R.id.btnSignOut).setOnClickListener(this);
 
     } // End of onCreate
 
+    private void signOut() {
+        mAuth.signOut();
+        goto_LoginActivity();
+    }
 
     private void updateUI(FirebaseUser fUser) {
-        btnSignOut.setVisibility(View.VISIBLE);
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
 
-        if (account.getDisplayName().equals("Adrianus Rumanta")) {
-            Toast.makeText(this, "Admin has logged in", Toast.LENGTH_SHORT).show();
-
-        } else if (account != null) {
+        if (account != null) {
             String personName = account.getDisplayName();
             String personGivenName = account.getGivenName();
             String personFamilyName = account.getFamilyName();
@@ -123,6 +104,14 @@ public class MainDashboard extends AppCompatActivity {
                 Log.w(TAG, "Google sign in failed", e);
                 // ...
             }
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        int i = v.getId();
+        if (i == R.id.btnSignOut) {
+            signOut();
         }
     }
 }
