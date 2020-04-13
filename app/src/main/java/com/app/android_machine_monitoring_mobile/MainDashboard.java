@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.app.android_machine_monitoring_mobile.shared.BaseActivity;
+import com.app.android_machine_monitoring_mobile.shared.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -20,11 +22,17 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainDashboard extends BaseActivity implements View.OnClickListener {
     private GoogleSignInClient mGoogleSignInclient;
     private String TAG = "MainActivity";
     private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
     private int RC_SIGN_IN = 1;
 
     @Override
@@ -32,14 +40,46 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mAuth = FirebaseAuth.getInstance();
+        // Buttons
         findViewById(R.id.btnSignOut).setOnClickListener(this);
+
+        // Firebase
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference("Users");
+
+
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                // TODO Read from database
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    {
+                        User user = snapshot.getValue(User.class);
+                        String uid = user.getUid();
+                        Toast.makeText(MainDashboard.this, uid, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
 
     } // End of onCreate
 
     private void signOut() {
         mAuth.signOut();
         goto_LoginActivity();
+    }
+
+    private void readFromDatabase() {
+        // Read from the database
+
     }
 
     private void updateUI(FirebaseUser fUser) {
@@ -114,4 +154,5 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
             signOut();
         }
     }
+
 }

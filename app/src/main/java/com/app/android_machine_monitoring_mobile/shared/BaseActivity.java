@@ -1,4 +1,4 @@
-package com.app.android_machine_monitoring_mobile;
+package com.app.android_machine_monitoring_mobile.shared;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +8,10 @@ import android.widget.ProgressBar;
 
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.app.android_machine_monitoring_mobile.LoginActivity;
+import com.app.android_machine_monitoring_mobile.MainDashboard;
+import com.app.android_machine_monitoring_mobile.RegisterActivity;
 
 public class BaseActivity extends AppCompatActivity {
 

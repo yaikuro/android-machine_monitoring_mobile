@@ -1,6 +1,5 @@
 package com.app.android_machine_monitoring_mobile;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -10,15 +9,16 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.app.android_machine_monitoring_mobile.shared.BaseActivity;
+import com.app.android_machine_monitoring_mobile.shared.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-//TODO: Save user's info to Realtime Database in Firebase
 
 public class RegisterActivity extends BaseActivity implements View.OnClickListener {
 
@@ -31,6 +31,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private EditText etRegisterNickname;
 
     private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +53,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
 
         mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference("Users");
 
     } // End of onCreate
 
-    private void signUpEmail(String email, String password, String confirmedPassword, String fullName, String nickname) {
+    private void signUpEmail(final String email, final String password, final String confirmedPassword, final String fullName, final String nickname) {
         Log.d(TAG, "createAccount:" + email);
         if (!validateForm()) {
             return;
@@ -70,43 +72,28 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
+                            writeNewUser(email, fullName, nickname);
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+                            goto_MainDashboard();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(RegisterActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            updateUI(null);
                         }
 
-                        // [START_EXCLUDE]
+
                         hideProgressBar();
-                        // [END_EXCLUDE]
                     }
                 });
         // [END create_user_with_email]
-    }
+    } // End of signUpEmail()
 
-    private void updateUI(FirebaseUser fUser) {
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
-
-        if (account != null) {
-            String personName = account.getDisplayName();
-            String personGivenName = account.getGivenName();
-            String personFamilyName = account.getFamilyName();
-            String personEmail = account.getEmail();
-            String personId = account.getId();
-            Uri personPhoto = account.getPhotoUrl();
-
-            goto_MainDashboard();
-
-            Toast.makeText(this, personName + " has logged in", Toast.LENGTH_SHORT).show();
-
-        } else {
-            Toast.makeText(this, "There's an error", Toast.LENGTH_SHORT).show();
-        }
+    private void writeNewUser(String email, String fullName, String nickname) {
+        String uid = mAuth.getUid();
+        User user = new User(uid, email, fullName, nickname);
+        mDatabase.child(user.getUid()).setValue(user);
     }
 
     private boolean validateForm() {
@@ -134,6 +121,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
         if (TextUtils.isEmpty(confirmedPassword)) {
             etRegisterConfirmedPassword.setError("Required.");
+            valid = false;
+        } else if (!password.equals(confirmedPassword)) {
+            etRegisterConfirmedPassword.setError("Password confirmation does not match.");
             valid = false;
         } else {
             etRegisterConfirmedPassword.setError(null);

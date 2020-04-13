@@ -1,7 +1,6 @@
 package com.app.android_machine_monitoring_mobile;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -11,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.app.android_machine_monitoring_mobile.shared.BaseActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -67,7 +67,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 //        super.onStart();
 //        // Check if user is signed in (non-null) and update UI accordingly.
 //        FirebaseUser currentUser = mAuth.getCurrentUser();
-//        updateUI(currentUser);
+//        if (currentUser != null) {
+//            // User is signed in
+//            updateUI(currentUser);
+//        }
 //    }
 
     private void signInEmail(String email, String password) {
@@ -87,13 +90,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+                            goto_MainDashboard();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            updateUI(null);
                         }
 
                         hideProgressBar();
@@ -108,26 +110,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         startActivityForResult(signInintent, RC_SIGN_IN_GOOGLE);
     }
 
-    private void updateUI(FirebaseUser fUser) {
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
-
-        if (account != null) {
-            String personName = account.getDisplayName();
-            String personGivenName = account.getGivenName();
-            String personFamilyName = account.getFamilyName();
-            String personEmail = account.getEmail();
-            String personId = account.getId();
-            Uri personPhoto = account.getPhotoUrl();
-
-            goto_MainDashboard();
-
-            Toast.makeText(this, personName + " has logged in", Toast.LENGTH_SHORT).show();
-
-        } else {
-            Toast.makeText(this, "There's an error", Toast.LENGTH_SHORT).show();
-        }
-    }
-
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
@@ -139,13 +121,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+                            FirebaseUser userGoogle = mAuth.getCurrentUser();
+                            goto_MainDashboard();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed", Toast.LENGTH_SHORT).show();
-                            updateUI(null);
                         }
 
                         // ...
