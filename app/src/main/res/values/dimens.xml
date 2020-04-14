@@ -1,0 +1,30 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="card_view_width">280dp</dimen>
+    <dimen name="card_view_height">160dp</dimen>
+    <dimen name="card_view_image_width">80dp</dimen>
+    <dimen name="card_view_image_height">80dp</dimen>
+    <dimen name="card_view_text">20sp</dimen>
+
+    <dimen name="card_view_width_hp">180dp</dimen>
+    <dimen name="card_view_height_hp">140dp</dimen>
+    <dimen name="card_view_image_width_hp">60dp</dimen>
+    <dimen name="card_view_image_height_hp">60dp</dimen>
+    <dimen name="card_view_text_hp">15sp</dimen>
+
+    <dimen name="material_card_spacing">8dp</dimen>
+    <dimen name="line_spacing">32dp</dimen>
+
+    <dimen name="machine_dashboard_recyclerview_width_size">990dp</dimen>
+    <dimen name="machine_dashboard_recyclerview_height_size">400dp</dimen>
+
+    <dimen name="machine_dashboard_recyclerview_width_size_hp">990dp</dimen>
+    <dimen name="machine_dashboard_recyclerview_height_size_hp">400dp</dimen>
+
+</resources>

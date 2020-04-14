@@ -2,39 +2,379 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/md_blue_grey_100"
     tools:context=".MainDashboard">
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/sign_in_google"
-        android:layout_width="wrap_content"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvUser"
+        style="@style/Widget.MaterialComponents.CardView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginLeft="@dimen/mtrl_card_spacing"
+        android:layout_marginTop="@dimen/mtrl_card_spacing"
+        android:layout_marginRight="@dimen/mtrl_card_spacing"
+        android:clickable="true"
+        android:minHeight="50dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="6dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="56dp"
-        android:onClick="test"
-        app:layout_constraintBottom_toTopOf="@+id/btnSignOut"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btnSignOut"
-        android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/image_person"
+                android:layout_width="150dp"
+                android:layout_height="170dp"
+                android:layout_gravity="start"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/profile_picture"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/txtWelcomeUser"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txtWelcomeUser"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@id/image_person"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvMachineDashboard"
+        style="@style/Widget.MaterialComponents.CardView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sign Out"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginLeft="@dimen/mtrl_card_spacing"
+        android:layout_marginTop="@dimen/mtrl_card_spacing"
+        android:layout_marginRight="@dimen/mtrl_card_spacing"
+        android:clickable="true"
+        android:minHeight="50dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="6dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_in_google" />
+        app:layout_constraintTop_toBottomOf="@id/cvUser">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/machinedashboardIcon"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_marginTop="8dp"
+                android:contentDescription="@string/machine_dashboard"
+                android:src="@drawable/machine_icon1"
+                app:layout_constraintBottom_toTopOf="@id/machinedashboardInfo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/machinedashboardInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/machine_dashboard"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/machinedashboardIcon" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardView_Progress"
+        style="@style/Widget.MaterialComponents.CardView"
+        android:layout_width="@dimen/card_view_width_hp"
+        android:layout_height="@dimen/card_view_height_hp"
+        android:layout_marginLeft="@dimen/mtrl_card_spacing"
+        android:layout_marginTop="@dimen/mtrl_card_spacing"
+        android:layout_marginRight="@dimen/mtrl_card_spacing"
+        android:clickable="true"
+        android:minHeight="50dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="6dp"
+        app:layout_constraintEnd_toStartOf="@id/cvProblemWaitingList"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cvMachineDashboard">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <RelativeLayout
+                android:layout_width="84dp"
+                android:layout_height="77dp"
+                app:layout_constraintBottom_toTopOf="@+id/cardView_MachineDashboard"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <RelativeLayout
+                    android:id="@+id/relLayout_customProgressCircleBar"
+                    android:layout_width="64dp"
+                    android:layout_height="57dp"
+                    android:layout_centerHorizontal="true">
+
+                    <!--                    <ProgressBar-->
+                    <!--                        android:id="@+id/progressBar"-->
+                    <!--                        style="?android:attr/progressBarStyleHorizontal"-->
+                    <!--                        android:layout_width="match_parent"-->
+                    <!--                        android:layout_height="match_parent"-->
+                    <!--                        android:layout_centerHorizontal="true"-->
+                    <!--                        android:indeterminate="false"-->
+                    <!--                        android:max="100"-->
+                    <!--                        android:progress="0"-->
+                    <!--                        android:progressDrawable="@drawable/custom_progressbar_drawable"-->
+                    <!--                        android:secondaryProgress="0" />-->
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <!--                        <TextView-->
+                        <!--                            android:id="@+id/txtProgress"-->
+                        <!--                            android:layout_width="wrap_content"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:layout_centerInParent="true"-->
+                        <!--                            android:layout_centerHorizontal="true"-->
+                        <!--                            android:layout_centerVertical="true"-->
+                        <!--                            android:text="@string/n_a"-->
+                        <!--                            android:textAppearance="?android:attr/textAppearanceSmall"-->
+                        <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+                        <!--                            app:layout_constraintEnd_toEndOf="parent"-->
+                        <!--                            app:layout_constraintStart_toStartOf="parent"-->
+                        <!--                            app:layout_constraintTop_toTopOf="parent" />-->
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </RelativeLayout>
+
+                <!--                <TextView-->
+                <!--                    android:id="@+id/progress_counter"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_below="@+id/relLayout_customProgressCircleBar"-->
+                <!--                    android:layout_centerHorizontal="true"-->
+                <!--                    android:text="@string/_00" />-->
+            </RelativeLayout>
+
+            <!--            <TextView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:text="@string/today_s_progress"-->
+            <!--                android:textAlignment="center"-->
+            <!--                android:textColor="@color/black"-->
+            <!--                android:textSize="@dimen/card_view_text_hp"-->
+            <!--                android:textStyle="bold" />-->
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvProblemWaitingList"
+        style="@style/Widget.MaterialComponents.CardView"
+        android:layout_width="@dimen/card_view_width_hp"
+        android:layout_height="@dimen/card_view_height_hp"
+        android:layout_marginLeft="@dimen/mtrl_card_spacing"
+        android:layout_marginTop="@dimen/mtrl_card_spacing"
+        android:layout_marginRight="@dimen/mtrl_card_spacing"
+        android:clickable="true"
+        android:minHeight="50dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/cardView_Progress"
+        app:layout_constraintTop_toBottomOf="@id/cvMachineDashboard">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="@dimen/card_view_image_width_hp"
+                android:layout_height="@dimen/card_view_image_height_hp"
+                android:src="@drawable/machine_icon2" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/problem_waiting_list"
+                android:textColor="@color/black"
+                android:textSize="@dimen/card_view_text_hp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardView_comingsoon1"
+        style="@style/Widget.MaterialComponents.CardView"
+        android:layout_width="@dimen/card_view_width_hp"
+        android:layout_height="@dimen/card_view_height_hp"
+        android:layout_marginLeft="@dimen/mtrl_card_spacing"
+        android:layout_marginTop="@dimen/mtrl_card_spacing"
+        android:layout_marginRight="@dimen/mtrl_card_spacing"
+        android:clickable="true"
+        android:minHeight="50dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="6dp"
+        app:layout_constraintEnd_toStartOf="@+id/cardView_comingsoon2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardView_Progress">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <RelativeLayout
+                android:layout_width="84dp"
+                android:layout_height="77dp"
+                app:layout_constraintBottom_toTopOf="@+id/cardView_Progress"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <RelativeLayout
+                    android:id="@+id/relLayout_customProgressCircleBar1"
+                    android:layout_width="64dp"
+                    android:layout_height="57dp"
+                    android:layout_centerHorizontal="true">
+
+                    <!--                    <ProgressBar-->
+                    <!--                        android:id="@+id/progressBar1"-->
+                    <!--                        style="?android:attr/progressBarStyleHorizontal"-->
+                    <!--                        android:layout_width="match_parent"-->
+                    <!--                        android:layout_height="match_parent"-->
+                    <!--                        android:layout_centerHorizontal="true"-->
+                    <!--                        android:indeterminate="false"-->
+                    <!--                        android:max="100"-->
+                    <!--                        android:progress="0"-->
+                    <!--                        android:progressDrawable="@drawable/custom_progressbar_drawable"-->
+                    <!--                        android:secondaryProgress="0" />-->
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <!--                        <TextView-->
+                        <!--                            android:id="@+id/txtProgress1"-->
+                        <!--                            android:layout_width="wrap_content"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:layout_centerInParent="true"-->
+                        <!--                            android:layout_centerHorizontal="true"-->
+                        <!--                            android:layout_centerVertical="true"-->
+                        <!--                            android:text="N/A"-->
+                        <!--                            android:textAppearance="?android:attr/textAppearanceSmall"-->
+                        <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+                        <!--                            app:layout_constraintEnd_toEndOf="parent"-->
+                        <!--                            app:layout_constraintStart_toStartOf="parent"-->
+                        <!--                            app:layout_constraintTop_toTopOf="parent" />-->
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </RelativeLayout>
+
+                <!--                <TextView-->
+                <!--                    android:id="@+id/progress_counter1"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_below="@+id/relLayout_customProgressCircleBar1"-->
+                <!--                    android:layout_centerHorizontal="true"-->
+                <!--                    android:text="@string/_00" />-->
+            </RelativeLayout>
+
+            <!--            <TextView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:text="@string/coming_soon"-->
+            <!--                android:textAlignment="center"-->
+            <!--                android:textColor="@color/black"-->
+            <!--                android:textSize="@dimen/card_view_text_hp"-->
+            <!--                android:textStyle="bold" />-->
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardView_comingsoon2"
+        style="@style/Widget.MaterialComponents.CardView"
+        android:layout_width="@dimen/card_view_width_hp"
+        android:layout_height="@dimen/card_view_height_hp"
+        android:layout_marginLeft="@dimen/mtrl_card_spacing"
+        android:layout_marginTop="@dimen/mtrl_card_spacing"
+        android:layout_marginRight="@dimen/mtrl_card_spacing"
+        android:clickable="true"
+        android:minHeight="50dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cardView_comingsoon1"
+        app:layout_constraintTop_toBottomOf="@id/cvProblemWaitingList">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="@dimen/card_view_image_width_hp"
+                android:layout_height="@dimen/card_view_image_height_hp"
+                android:src="@drawable/machine_icon3" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/coming_soon"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/card_view_text_hp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

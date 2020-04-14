@@ -15,7 +15,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -74,7 +73,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                             // Sign in success, update UI with the signed-in user's information
                             writeNewUser(email, fullName, nickname);
                             Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
                             goto_MainDashboard();
                         } else {
                             // If sign in fails, display a message to the user.
@@ -92,6 +90,21 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     private void writeNewUser(String email, String fullName, String nickname) {
         String uid = mAuth.getUid();
+//        FirebaseUser userProfile = mAuth.getCurrentUser();
+//
+//        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+//                .setDisplayName(fullName)
+//                .build();
+//
+//        userProfile.updateProfile(profileUpdates)
+//                .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        if (task.isSuccessful()) {
+//                            Log.d(TAG, "User profile updated.");
+//                        }
+//                    }
+//                });
         User user = new User(uid, email, fullName, nickname);
         mDatabase.child(user.getUid()).setValue(user);
     }

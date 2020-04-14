@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.app.android_machine_monitoring_mobile.LoginActivity;
 import com.app.android_machine_monitoring_mobile.MainDashboard;
 import com.app.android_machine_monitoring_mobile.RegisterActivity;
+import com.app.android_machine_monitoring_mobile.UserProfile;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -47,8 +48,8 @@ public class BaseActivity extends AppCompatActivity {
         hideProgressBar();
     }
 
-    public void goto_MainDashboard() {
-        Intent i = new Intent(this, MainDashboard.class);
+    public void goto_LoginActivity() {
+        Intent i = new Intent(this, LoginActivity.class);
         startActivity(i);
         finish();
     }
@@ -59,10 +60,15 @@ public class BaseActivity extends AppCompatActivity {
         finish();
     }
 
-    public void goto_LoginActivity() {
-        Intent i = new Intent(this, LoginActivity.class);
+    public void goto_MainDashboard() {
+        Intent i = new Intent(this, MainDashboard.class);
         startActivity(i);
         finish();
+    }
+
+    public void goto_UserProfile() {
+        Intent i = new Intent(this, UserProfile.class);
+        startActivity(i);
     }
 
 }

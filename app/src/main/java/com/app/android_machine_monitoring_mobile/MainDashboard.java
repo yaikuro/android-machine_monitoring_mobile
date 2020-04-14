@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,46 +33,59 @@ import com.google.firebase.database.ValueEventListener;
 public class MainDashboard extends BaseActivity implements View.OnClickListener {
     private GoogleSignInClient mGoogleSignInclient;
     private String TAG = "MainActivity";
+    private String uid, email, fullName, nickname;
+    private TextView txtWelcomeUser;
+    private MaterialCardView cvUser, cvMachineDashboard, cvProblemWaitingList;
     private FirebaseAuth mAuth;
-    private DatabaseReference mDatabase;
+    private FirebaseUser mUser;
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference myRef;
     private int RC_SIGN_IN = 1;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Buttons
-        findViewById(R.id.btnSignOut).setOnClickListener(this);
-
         // Firebase
         mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference("Users");
+
+        mDatabase = FirebaseDatabase.getInstance();
+        myRef = mDatabase.getReference("Users");
+        readFromDatabase();
+
+        // Views
+        txtWelcomeUser = findViewById(R.id.txtWelcomeUser);
 
 
-        mDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                // TODO Read from database
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    {
-                        User user = snapshot.getValue(User.class);
-                        String uid = user.getUid();
-                        Toast.makeText(MainDashboard.this, uid, Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
+        // Buttons
+        findViewById(R.id.cvUser).setOnClickListener(this);
+        findViewById(R.id.cvMachineDashboard).setOnClickListener(this);
+        findViewById(R.id.cvProblemWaitingList).setOnClickListener(this);
 
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
 
     } // End of onCreate
+
+    private void userProfile() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            // Name, email address, and profile photo Url
+            String name = user.getDisplayName();
+            String email = user.getEmail();
+            Uri photoUrl = user.getPhotoUrl();
+
+            // Check if user's email is verified
+            boolean emailVerified = user.isEmailVerified();
+
+            // The user's ID, unique to the Firebase project. Do NOT use this value to
+            // authenticate with your backend server, if you have one. Use
+//             FirebaseUser.getIdToken() instead.
+            String uid = user.getUid();
+
+            Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
+        }
+    }
 
     private void signOut() {
         mAuth.signOut();
@@ -79,6 +94,34 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
 
     private void readFromDatabase() {
         // Read from the database
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    {
+//                        User user = snapshot.getValue(User.class);
+//                        String uid = user.getUid();
+//                        Toast.makeText(MainDashboard.this, uid, Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+
+                uid = mAuth.getUid();
+                email = dataSnapshot.child(uid).child("email").getValue().toString();
+                fullName = dataSnapshot.child(uid).child("fullName").getValue().toString();
+                nickname = dataSnapshot.child(uid).child("nickname").getValue().toString();
+                user = new User(uid, email, fullName, nickname);
+                txtWelcomeUser.setText("Welcome " + nickname);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
 
     }
 
@@ -150,9 +193,12 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        if (i == R.id.btnSignOut) {
-            signOut();
+        if (i == R.id.cvUser) {
+            goto_UserProfile();
+        } else if (i == R.id.cvMachineDashboard) {
+
+        } else if (i == R.id.cvProblemWaitingList) {
+
         }
     }
-
 }

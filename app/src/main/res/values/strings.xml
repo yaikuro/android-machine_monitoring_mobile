@@ -12,4 +12,8 @@
     <string name="full_name">Full Name</string>
     <string name="nickname">Nickname</string>
     <string name="already_have_an_account">Already have an account?</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="machine_dashboard">Machine Dashboard</string>
+    <string name="problem_waiting_list">Problem Waiting List</string>
+    <string name="coming_soon">Coming Soon</string>
 </resources>
