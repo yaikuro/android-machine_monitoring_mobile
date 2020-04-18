@@ -33,7 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 public class MainDashboard extends BaseActivity implements View.OnClickListener {
     private GoogleSignInClient mGoogleSignInclient;
     private String TAG = "MainActivity";
-    private String uid, email, fullName, nickname;
+    private String uid, email, fullName, nickname, mobilePhoneNumber;
     private TextView txtWelcomeUser;
     private MaterialCardView cvUser, cvMachineDashboard, cvProblemWaitingList;
     private FirebaseAuth mAuth;
@@ -50,7 +50,6 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
 
         // Firebase
         mAuth = FirebaseAuth.getInstance();
-
         mDatabase = FirebaseDatabase.getInstance();
         myRef = mDatabase.getReference("Users");
         readFromDatabase();
@@ -62,7 +61,7 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
         // Buttons
         findViewById(R.id.cvUser).setOnClickListener(this);
         findViewById(R.id.cvMachineDashboard).setOnClickListener(this);
-        findViewById(R.id.cvProblemWaitingList).setOnClickListener(this);
+        findViewById(R.id.cvBreakdownList).setOnClickListener(this);
 
 
     } // End of onCreate
@@ -112,7 +111,7 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
                 email = dataSnapshot.child(uid).child("email").getValue().toString();
                 fullName = dataSnapshot.child(uid).child("fullName").getValue().toString();
                 nickname = dataSnapshot.child(uid).child("nickname").getValue().toString();
-                user = new User(uid, email, fullName, nickname);
+                user = new User(uid, email, fullName, nickname, mobilePhoneNumber);
                 txtWelcomeUser.setText("Welcome " + nickname);
             }
 
@@ -196,9 +195,9 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
         if (i == R.id.cvUser) {
             goto_UserProfile();
         } else if (i == R.id.cvMachineDashboard) {
-
-        } else if (i == R.id.cvProblemWaitingList) {
-
+            goto_MachineDashboard();
+        } else if (i == R.id.cvBreakdownList) {
+            goto_BreakdownListActivity();
         }
     }
 }

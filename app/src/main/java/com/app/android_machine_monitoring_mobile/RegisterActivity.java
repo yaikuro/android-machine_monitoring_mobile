@@ -28,6 +28,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private EditText etRegisterConfirmedPassword;
     private EditText etRegisterFullName;
     private EditText etRegisterNickname;
+    private EditText etRegisterMobilePhoneNumber;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -40,11 +41,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
 
         // Views
-        etRegisterID = findViewById(R.id.etRegisterID);
+        etRegisterID = findViewById(R.id.etRegisterEmail);
         etRegisterPassword = findViewById(R.id.etRegisterPassword);
         etRegisterConfirmedPassword = findViewById(R.id.etRegisterConfirmPassword);
         etRegisterFullName = findViewById(R.id.etRegisterFullName);
         etRegisterNickname = findViewById(R.id.etRegisterNickname);
+        etRegisterMobilePhoneNumber = findViewById(R.id.etRegisterMobilePhoneNumber);
 
         // Buttons
         findViewById(R.id.btnSignUpEmail).setOnClickListener(this);
@@ -56,7 +58,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     } // End of onCreate
 
-    private void signUpEmail(final String email, final String password, final String confirmedPassword, final String fullName, final String nickname) {
+    private void signUpEmail(final String email, final String password,
+                             final String confirmedPassword, final String fullName,
+                             final String nickname, final String mobilePhoneNumber) {
         Log.d(TAG, "createAccount:" + email);
         if (!validateForm()) {
             return;
@@ -71,7 +75,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            writeNewUser(email, fullName, nickname);
+                            writeNewUser(email, fullName, nickname, mobilePhoneNumber);
                             Log.d(TAG, "createUserWithEmail:success");
                             goto_MainDashboard();
                         } else {
@@ -88,24 +92,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         // [END create_user_with_email]
     } // End of signUpEmail()
 
-    private void writeNewUser(String email, String fullName, String nickname) {
+    private void writeNewUser(String email, String fullName, String nickname, String mobilePhoneNumber) {
         String uid = mAuth.getUid();
-//        FirebaseUser userProfile = mAuth.getCurrentUser();
-//
-//        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-//                .setDisplayName(fullName)
-//                .build();
-//
-//        userProfile.updateProfile(profileUpdates)
-//                .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        if (task.isSuccessful()) {
-//                            Log.d(TAG, "User profile updated.");
-//                        }
-//                    }
-//                });
-        User user = new User(uid, email, fullName, nickname);
+        User user = new User(uid, email, fullName, nickname, mobilePhoneNumber);
         mDatabase.child(user.getUid()).setValue(user);
     }
 
@@ -117,6 +106,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         String confirmedPassword = etRegisterConfirmedPassword.getText().toString();
         String fullName = etRegisterFullName.getText().toString();
         String nickname = etRegisterNickname.getText().toString();
+        String mobilePhoneNumber = etRegisterPassword.getText().toString();
 
         if (TextUtils.isEmpty(id)) {
             etRegisterID.setError("Required.");
@@ -156,6 +146,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             etRegisterNickname.setError(null);
         }
 
+        if (TextUtils.isEmpty(mobilePhoneNumber)) {
+            etRegisterMobilePhoneNumber.setError("Required.");
+            valid = false;
+        } else {
+            etRegisterMobilePhoneNumber.setError(null);
+        }
 
         return valid;
     }
@@ -169,7 +165,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     etRegisterPassword.getText().toString(),
                     etRegisterConfirmedPassword.getText().toString(),
                     etRegisterFullName.getText().toString(),
-                    etRegisterNickname.getText().toString());
+                    etRegisterNickname.getText().toString(),
+                    etRegisterMobilePhoneNumber.getText().toString());
         } else if (i == R.id.txtSignIn) {
             goto_LoginActivity();
         }

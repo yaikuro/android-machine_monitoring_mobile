@@ -9,15 +9,33 @@ public class User {
     public String email;
     public String fullName;
     public String nickname;
+    public String mobilePhoneNumber;
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public User(String uid, String email, String fullName, String nickname) {
+    public User(String uid, String email, String fullName, String nickname, String mobilePhoneNumber) {
         this.uid = uid;
         this.email = email;
         this.fullName = fullName;
+        this.nickname = nickname;
+        this.mobilePhoneNumber = mobilePhoneNumber;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public void setNickname(String nickname) {
         this.nickname = nickname;
     }
 
@@ -25,31 +43,25 @@ public class User {
         return uid;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-
     public String getEmail() {
         return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getFullName() {
         return fullName;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
     public String getNickname() {
         return nickname;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public String getMobilePhoneNumber() {
+        return mobilePhoneNumber;
     }
+
+    public void setMobilePhoneNumber(String mobilePhoneNumber) {
+        this.mobilePhoneNumber = mobilePhoneNumber;
+    }
+
+
 }

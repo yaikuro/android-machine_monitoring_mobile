@@ -11,6 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.Light">
+        <activity android:name=".MachineDashboard"></activity>
+        <activity android:name=".BreakdownListActivity" />
         <activity android:name=".UserProfile" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainDashboard" />

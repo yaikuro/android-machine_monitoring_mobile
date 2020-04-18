@@ -63,16 +63,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     } // End of onCreate
 
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        // Check if user is signed in (non-null) and update UI accordingly.
-//        FirebaseUser currentUser = mAuth.getCurrentUser();
-//        if (currentUser != null) {
-//            // User is signed in
-//            updateUI(currentUser);
-//        }
-//    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            // User is signed in
+            goto_MainDashboard();
+        }
+    }
 
     private void signInEmail(String email, String password) {
         Log.d(TAG, "signIn:" + email);

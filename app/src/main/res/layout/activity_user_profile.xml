@@ -1,8 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".UserProfile">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        android:id="@+id/userProfilePicture"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="60dp"
+        android:layout_height="70dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/google_icon_resized"
+        app:cornerRadius="70dp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txtHiUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="30dp"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/personalData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="@string/personal_data"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/personalDataInfo"
+            android:text="@string/name" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtUserProfileName"
+            style="@style/personalDataTextView" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/personalDataInfo"
+            android:text="@string/email" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtUserProfileEmail"
+            style="@style/personalDataTextView" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/personalDataInfo"
+            android:text="@string/mobile_phone_number" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtUserProfileMobilePhoneNumber"
+            style="@style/personalDataTextView" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/personalDataInfo"
+            android:text="@string/user_unique_id" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtUserProfileUserUid"
+            style="@style/personalDataTextView" />
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSignOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/sign_out" />
+
+
+</LinearLayout>
