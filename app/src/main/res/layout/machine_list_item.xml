@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="?android:attr/listSeparatorTextViewStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txtMachineName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Machine Name"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txtMachineLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Machine Line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtMachineName" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txtMachineStation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Machine Station"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtMachineName" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txtMachineID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Machine ID"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtMachineLine" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txtMachineStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Machine Status"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtMachineStation" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

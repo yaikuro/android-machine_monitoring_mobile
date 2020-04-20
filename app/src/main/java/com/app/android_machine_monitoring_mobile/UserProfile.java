@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import com.app.android_machine_monitoring_mobile.shared.BaseActivity;
 import com.app.android_machine_monitoring_mobile.shared.User;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,7 +26,6 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
             txtUserProfileMobilePhoneNumber,
             txtUserProfileUid;
     private FirebaseAuth mAuth;
-    private FirebaseUser mUser;
     private FirebaseDatabase mDatabase;
     private DatabaseReference myRef;
     private User user;
@@ -62,14 +60,6 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-
-//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                    {
-//                        User user = snapshot.getValue(User.class);
-//                        String uid = user.getUid();
-//                        Toast.makeText(MainDashboard.this, uid, Toast.LENGTH_SHORT).show();
-//                    }
-//                }
 
                 uid = mAuth.getUid();
 
