@@ -1,49 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="?android:attr/listSeparatorTextViewStyle"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    style="@style/Widget.MaterialComponents.CardView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/material_card_spacing"
+    android:layout_marginTop="@dimen/material_card_spacing"
+    android:layout_marginEnd="@dimen/material_card_spacing"
+    android:background="?selectableItemBackground"
+    app:cardCornerRadius="30dp">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/txtMachineName"
+    <RelativeLayout
+        android:id="@+id/image_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Machine Name"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_centerInParent="true">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/txtMachineLine"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Machine Line"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtMachineName" />
+        <ImageView
+            android:id="@+id/ivStatusColor"
+            android:layout_width="120dp"
+            android:layout_height="70dp" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/txtMachineStation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Machine Station"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtMachineName" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/txtMachineID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Machine ID"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtMachineLine" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtMachineName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:shadowColor="@color/black"
+                android:shadowDx="4"
+                android:shadowDy="4"
+                android:shadowRadius="6"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/txtMachineStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Machine Status"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtMachineStation" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtMachineLine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtMachineStation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtMachineName"
+                android:layout_toEndOf="@id/txtMachineLine"
+                android:textColor="#FFFFFF" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtMachineID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtMachineName" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

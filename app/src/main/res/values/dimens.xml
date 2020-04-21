@@ -8,6 +8,9 @@
 
     <dimen name="personal_data_text_size">16sp</dimen>
 
+    <dimen name="machinedashboard_color">5dp</dimen>
+    <dimen name="machinedashboard_color_info">30dp</dimen>
+
     <dimen name="card_view_width_hp">180dp</dimen>
     <dimen name="card_view_height_hp">140dp</dimen>
     <dimen name="card_view_image_width_hp">60dp</dimen>

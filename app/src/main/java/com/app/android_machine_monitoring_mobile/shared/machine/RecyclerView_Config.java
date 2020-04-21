@@ -1,12 +1,13 @@
-package com.app.android_machine_monitoring_mobile.shared;
+package com.app.android_machine_monitoring_mobile.shared.machine;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.android_machine_monitoring_mobile.R;
@@ -17,10 +18,21 @@ public class RecyclerView_Config {
     private Context mContext;
     private MachineAdapter machineAdapter;
 
+    private int[] colorStatusList = new int[]
+            {
+                    R.drawable.color_green,     // Running
+                    R.drawable.color_red,       // Breakdown
+                    R.drawable.color_yellow,    // Repairing
+                    R.drawable.color_blue       // Waiting for confirmation
+            };
+
     public void setConfig(RecyclerView recyclerView, Context context, List<Machine> machineList, List<String> keys) {
         mContext = context;
+        int numberOfColumns = 2;
+
         machineAdapter = new MachineAdapter(machineList, keys);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(context, numberOfColumns, GridLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(machineAdapter);
     }
 
@@ -29,7 +41,7 @@ public class RecyclerView_Config {
         private TextView machineLine;
         private TextView machineStation;
         private TextView machineID;
-        private TextView machineStatus;
+        private ImageView machineStatusColor;
 
         private String key;
 
@@ -41,7 +53,7 @@ public class RecyclerView_Config {
             machineLine = itemView.findViewById(R.id.txtMachineLine);
             machineStation = itemView.findViewById(R.id.txtMachineStation);
             machineID = itemView.findViewById(R.id.txtMachineID);
-            machineStatus = itemView.findViewById(R.id.txtMachineStatus);
+            machineStatusColor = itemView.findViewById(R.id.ivStatusColor);
         }
 
         public void bind(Machine machine, String key) {
@@ -49,7 +61,7 @@ public class RecyclerView_Config {
             machineLine.setText(machine.getMachineLine());
             machineStation.setText(machine.getMachineStation());
             machineID.setText(machine.getMachineID());
-            machineStatus.setText(machine.getMachineStatus());
+            machineStatusColor.setImageResource(colorStatusList[Integer.parseInt(machine.getMachineStatus()) - 1]);
             this.key = key;
         }
     }

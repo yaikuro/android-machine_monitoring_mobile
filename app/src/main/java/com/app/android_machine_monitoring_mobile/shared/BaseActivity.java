@@ -72,13 +72,13 @@ public class BaseActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    public void goto_BreakdownListActivity() {
-        Intent i = new Intent(this, BreakdownListActivity.class);
+    public void goto_MachineDashboard() {
+        Intent i = new Intent(this, MachineDashboard.class);
         startActivity(i);
     }
 
-    public void goto_MachineDashboard() {
-        Intent i = new Intent(this, MachineDashboard.class);
+    public void goto_BreakdownListActivity() {
+        Intent i = new Intent(this, BreakdownListActivity.class);
         startActivity(i);
     }
 

@@ -11,7 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.app.android_machine_monitoring_mobile.shared.BaseActivity;
-import com.app.android_machine_monitoring_mobile.shared.User;
+import com.app.android_machine_monitoring_mobile.shared.user.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;

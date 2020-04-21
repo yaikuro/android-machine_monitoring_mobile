@@ -1,4 +1,4 @@
-package com.app.android_machine_monitoring_mobile.shared;
+package com.app.android_machine_monitoring_mobile.shared.machine;
 
 import androidx.annotation.NonNull;
 
@@ -22,8 +22,30 @@ public class GetMachineData {
         myRef = mDatabase.getReference("Machines");
     }
 
-    public void readMachinesData(final DataStatus dataStatus) {
-        myRef.addValueEventListener(new ValueEventListener() {
+
+    public void readMachinesDataLine1(final DataStatus dataStatus) {
+        myRef.child("Line 1").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                machineList.clear();
+                List<String> keys = new ArrayList<>();
+                for (DataSnapshot keyNode : dataSnapshot.getChildren()) {
+                    keys.add(keyNode.getKey());
+                    Machine machine = keyNode.getValue(Machine.class);
+                    machineList.add(machine);
+                }
+                dataStatus.DataIsLoaded(machineList, keys);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void readMachinesDataLine2(final DataStatus dataStatus) {
+        myRef.child("Line 2").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 machineList.clear();

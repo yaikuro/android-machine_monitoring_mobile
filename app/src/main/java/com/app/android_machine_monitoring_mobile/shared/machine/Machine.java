@@ -1,4 +1,4 @@
-package com.app.android_machine_monitoring_mobile.shared;
+package com.app.android_machine_monitoring_mobile.shared.machine;
 
 public class Machine {
     private String machineName;
