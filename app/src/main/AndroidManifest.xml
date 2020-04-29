@@ -13,7 +13,7 @@
         android:theme="@style/Theme.MaterialComponents.Light">
         <activity
             android:name=".MachineDashboard"
-            android:screenOrientation="userLandscape" />
+            android:screenOrientation="fullSensor" />
         <activity android:name=".BreakdownListActivity" />
         <activity android:name=".UserProfile" />
         <activity android:name=".RegisterActivity" />

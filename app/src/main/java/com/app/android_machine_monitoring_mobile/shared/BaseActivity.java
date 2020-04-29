@@ -59,6 +59,7 @@ public class BaseActivity extends AppCompatActivity {
     public void goto_RegisterActivity() {
         Intent i = new Intent(this, RegisterActivity.class);
         startActivity(i);
+        finish();
     }
 
     public void goto_MainDashboard() {

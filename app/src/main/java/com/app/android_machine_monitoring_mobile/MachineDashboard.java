@@ -32,7 +32,7 @@ public class MachineDashboard extends BaseActivity {
         new GetMachineData().readMachinesDataLine1(new GetMachineData.DataStatus() {
             @Override
             public void DataIsLoaded(List<Machine> machineList, List<String> keys) {
-                findViewById(R.id.pbbar).setVisibility(View.GONE);
+                findViewById(R.id.progressBar).setVisibility(View.GONE);
                 new RecyclerView_Config().setConfig(rvMachineListLine1, MachineDashboard.this, machineList, keys);
             }
 
@@ -57,7 +57,7 @@ public class MachineDashboard extends BaseActivity {
         new GetMachineData().readMachinesDataLine2(new GetMachineData.DataStatus() {
             @Override
             public void DataIsLoaded(List<Machine> machineList, List<String> keys) {
-                findViewById(R.id.pbbar).setVisibility(View.GONE);
+                findViewById(R.id.progressBar).setVisibility(View.GONE);
                 new RecyclerView_Config().setConfig(rvMachineListLine2, MachineDashboard.this, machineList, keys);
             }
 
@@ -82,7 +82,7 @@ public class MachineDashboard extends BaseActivity {
         new GetMachineData().readMachinesDataLine2(new GetMachineData.DataStatus() {
             @Override
             public void DataIsLoaded(List<Machine> machineList, List<String> keys) {
-                findViewById(R.id.pbbar).setVisibility(View.GONE);
+                findViewById(R.id.progressBar).setVisibility(View.GONE);
                 new RecyclerView_Config().setConfig(rvMachineListLine2, MachineDashboard.this, machineList, keys);
             }
 

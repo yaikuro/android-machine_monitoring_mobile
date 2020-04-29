@@ -26,7 +26,7 @@
     <string name="user_unique_id">User Unique ID</string>
     <string name="production_line">Production Line</string>
     <string name="assembly_line">Assembly Line</string>
-    <string name="waiting_confirmation">Waiting Confirmation</string>
+    <string name="waiting_confirmation">Confirming</string>
     <string name="repairing">Repairing</string>
     <string name="breakdown">Breakdown</string>
     <string name="running">Running</string>

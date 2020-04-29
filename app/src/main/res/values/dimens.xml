@@ -8,8 +8,11 @@
 
     <dimen name="personal_data_text_size">16sp</dimen>
 
-    <dimen name="machinedashboard_color">5dp</dimen>
-    <dimen name="machinedashboard_color_info">30dp</dimen>
+
+    <dimen name="machinedashboard_color_height_width">20dp</dimen>
+    <dimen name="machinedashboard_color_margin_end">5dp</dimen>
+    <dimen name="machinedashboard_color_info_margin_end">30dp</dimen>
+    <dimen name="machinedashboard_text_size">15sp</dimen>
 
     <dimen name="card_view_width_hp">180dp</dimen>
     <dimen name="card_view_height_hp">140dp</dimen>
