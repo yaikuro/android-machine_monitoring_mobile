@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.android_machine_monitoring_mobile.R;
@@ -26,13 +27,21 @@ public class RecyclerView_Config {
                     R.drawable.color_blue       // Waiting for confirmation
             };
 
-    public void setConfig(RecyclerView recyclerView, Context context, List<Machine> machineList, List<String> keys) {
+    public void setMachineListConfig(RecyclerView recyclerView, Context context, List<Machine> machineList, List<String> keys) {
         mContext = context;
         int numberOfColumns = 2;
 
         machineAdapter = new MachineAdapter(machineList, keys);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(context, numberOfColumns, GridLayoutManager.HORIZONTAL, false));
+        recyclerView.setAdapter(machineAdapter);
+    }
+
+    public void setBreakdownListConfig(RecyclerView recyclerView, Context context, List<Machine> machineList, List<String> keys) {
+        mContext = context;
+
+        machineAdapter = new MachineAdapter(machineList, keys);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(machineAdapter);
     }
 
@@ -47,7 +56,7 @@ public class RecyclerView_Config {
 
         public MachineItemView(ViewGroup parent) {
             super(LayoutInflater.from(mContext)
-                    .inflate(R.layout.machine_list_item, parent, false));
+                    .inflate(R.layout.machine_dashboard_list_item, parent, false));
 
             machineName = itemView.findViewById(R.id.txtMachineName);
             machineLine = itemView.findViewById(R.id.txtMachineLine);

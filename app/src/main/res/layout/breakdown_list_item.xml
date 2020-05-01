@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.MaterialComponents.CardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/material_card_spacing"
+    android:layout_marginTop="@dimen/material_card_spacing"
+    android:layout_marginEnd="@dimen/material_card_spacing"
+    android:minHeight="50dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="6dp"
+    android:background="?selectableItemBackground">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="67dp"
+        android:descendantFocusability="blocksDescendants">
+
+        <ImageView
+            android:id="@+id/ivStatusColor_BreakdownList"
+            android:layout_width="67dp"
+            android:layout_height="67dp"
+            android:layout_alignParentStart="true"
+            android:layout_margin="5dp" />
+
+        <TextView
+            android:id="@+id/Line1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@id/image"
+            android:text="@string/line_doubledot"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtMachineLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@id/Line1"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/Station1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Line1"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/image"
+            android:text="@string/station_doubledot"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtMachineStation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Line1"
+            android:layout_toEndOf="@+id/Station1"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/Person"
+            android:layout_width="0dp"
+            android:layout_height="0dp" />
+
+        <ImageButton
+            android:id="@+id/btnMoreOptions"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:background="#00FFFFFF"
+            android:contentDescription="@string/more_options"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:onClick="listMenuButton"
+            android:src="@drawable/ic_more_options_vert_black_24dp" />
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>

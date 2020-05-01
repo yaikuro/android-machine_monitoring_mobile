@@ -10,6 +10,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GetMachineData {
 
@@ -20,6 +21,30 @@ public class GetMachineData {
     public GetMachineData() {
         mDatabase = FirebaseDatabase.getInstance();
         myRef = mDatabase.getReference("Machines");
+    }
+
+    public void readMachinesData(final DataStatus dataStatus) {
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                machineList.clear();
+                List<String> machines = new ArrayList<>();
+
+                for (DataSnapshot lineNode : dataSnapshot.getChildren()) {
+                    for (DataSnapshot machineNode : lineNode.getChildren()) {
+                        machines.add(machineNode.getKey());
+                        Machine machine = machineNode.getValue(Machine.class);
+                        machineList.add(machine);
+                    }
+                }
+                dataStatus.DataIsLoaded(machineList, machines);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
 
@@ -64,6 +89,7 @@ public class GetMachineData {
             }
         });
     }
+
 
     public interface DataStatus {
         void DataIsLoaded(List<Machine> machineList, List<String> keys);

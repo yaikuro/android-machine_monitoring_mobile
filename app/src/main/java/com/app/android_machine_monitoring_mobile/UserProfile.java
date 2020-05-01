@@ -37,6 +37,7 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
 
         // Firebase
         mAuth = FirebaseAuth.getInstance();
+        uid = mAuth.getUid();
         mDatabase = FirebaseDatabase.getInstance();
         myRef = mDatabase.getReference("Users");
         readUserInfoFromDatabase();
@@ -55,24 +56,18 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
 
     private void readUserInfoFromDatabase() {
         // Read user info from the database
-        myRef.addValueEventListener(new ValueEventListener() {
+        myRef.child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
 
-                uid = mAuth.getUid();
+                user = dataSnapshot.getValue(User.class);
 
-                email = dataSnapshot.child(uid).child("email").getValue().toString();
-                fullName = dataSnapshot.child(uid).child("fullName").getValue().toString();
-                nickname = dataSnapshot.child(uid).child("nickname").getValue().toString();
-                mobilePhoneNumber = dataSnapshot.child(uid).child("mobilePhoneNumber").getValue().toString();
-
-                user = new User(uid, email, fullName, nickname, mobilePhoneNumber);
-                txtHiUser.setText("Hi, " + nickname);
-                txtUserProfileName.setText(fullName);
-                txtUserProfileEmail.setText(email);
-                txtUserProfileMobilePhoneNumber.setText(mobilePhoneNumber);
+                txtHiUser.setText("Hi, " + user.getNickname());
+                txtUserProfileName.setText(user.getFullName());
+                txtUserProfileEmail.setText(user.getEmail());
+                txtUserProfileMobilePhoneNumber.setText(user.getMobilePhoneNumber());
                 txtUserProfileUid.setText(uid);
             }
 

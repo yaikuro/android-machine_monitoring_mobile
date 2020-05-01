@@ -33,7 +33,7 @@ public class MachineDashboard extends BaseActivity {
             @Override
             public void DataIsLoaded(List<Machine> machineList, List<String> keys) {
                 findViewById(R.id.progressBar).setVisibility(View.GONE);
-                new RecyclerView_Config().setConfig(rvMachineListLine1, MachineDashboard.this, machineList, keys);
+                new RecyclerView_Config().setMachineListConfig(rvMachineListLine1, MachineDashboard.this, machineList, keys);
             }
 
             @Override
@@ -58,7 +58,7 @@ public class MachineDashboard extends BaseActivity {
             @Override
             public void DataIsLoaded(List<Machine> machineList, List<String> keys) {
                 findViewById(R.id.progressBar).setVisibility(View.GONE);
-                new RecyclerView_Config().setConfig(rvMachineListLine2, MachineDashboard.this, machineList, keys);
+                new RecyclerView_Config().setMachineListConfig(rvMachineListLine2, MachineDashboard.this, machineList, keys);
             }
 
             @Override
@@ -78,28 +78,4 @@ public class MachineDashboard extends BaseActivity {
         });
     }
 
-    private void setRvBreakdownList() {
-        new GetMachineData().readMachinesDataLine2(new GetMachineData.DataStatus() {
-            @Override
-            public void DataIsLoaded(List<Machine> machineList, List<String> keys) {
-                findViewById(R.id.progressBar).setVisibility(View.GONE);
-                new RecyclerView_Config().setConfig(rvMachineListLine2, MachineDashboard.this, machineList, keys);
-            }
-
-            @Override
-            public void DataIsInserted() {
-
-            }
-
-            @Override
-            public void DataIsUpdated() {
-
-            }
-
-            @Override
-            public void DataIsDeleted() {
-
-            }
-        });
-    }
 }

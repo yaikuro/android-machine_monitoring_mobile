@@ -17,9 +17,10 @@
         android:layout_centerInParent="true">
 
         <ImageView
-            android:id="@+id/ivStatusColor"
+            android:id="@+id/ivStatusColor_MachineDashboard"
             android:layout_width="120dp"
-            android:layout_height="70dp" />
+            android:layout_height="70dp"
+            android:contentDescription="@string/status_color" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
