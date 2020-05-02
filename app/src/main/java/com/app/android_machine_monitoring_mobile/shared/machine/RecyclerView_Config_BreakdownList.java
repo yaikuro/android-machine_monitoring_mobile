@@ -7,7 +7,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,7 +14,7 @@ import com.app.android_machine_monitoring_mobile.R;
 
 import java.util.List;
 
-public class RecyclerView_Config {
+public class RecyclerView_Config_BreakdownList {
     private Context mContext;
     private MachineAdapter machineAdapter;
 
@@ -27,16 +26,6 @@ public class RecyclerView_Config {
                     R.drawable.color_blue       // Waiting for confirmation
             };
 
-    public void setMachineListConfig(RecyclerView recyclerView, Context context, List<Machine> machineList, List<String> keys) {
-        mContext = context;
-        int numberOfColumns = 2;
-
-        machineAdapter = new MachineAdapter(machineList, keys);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(context, numberOfColumns, GridLayoutManager.HORIZONTAL, false));
-        recyclerView.setAdapter(machineAdapter);
-    }
-
     public void setBreakdownListConfig(RecyclerView recyclerView, Context context, List<Machine> machineList, List<String> keys) {
         mContext = context;
 
@@ -45,36 +34,40 @@ public class RecyclerView_Config {
         recyclerView.setAdapter(machineAdapter);
     }
 
+    // ViewHolder
     class MachineItemView extends RecyclerView.ViewHolder {
-        private TextView machineName;
         private TextView machineLine;
         private TextView machineStation;
         private TextView machineID;
+        private TextView machineName;
+        private String key;
         private ImageView machineStatusColor;
 
-        private String key;
 
         public MachineItemView(ViewGroup parent) {
             super(LayoutInflater.from(mContext)
-                    .inflate(R.layout.machine_dashboard_list_item, parent, false));
+                    .inflate(R.layout.breakdown_list_item, parent, false));
 
-            machineName = itemView.findViewById(R.id.txtMachineName);
             machineLine = itemView.findViewById(R.id.txtMachineLine);
             machineStation = itemView.findViewById(R.id.txtMachineStation);
-            machineID = itemView.findViewById(R.id.txtMachineID);
-            machineStatusColor = itemView.findViewById(R.id.ivStatusColor);
+//            machineID = itemView.findViewById(R.id.txtMachineID);
+//            machineName = itemView.findViewById(R.id.txtMachineName);
+            machineStatusColor = itemView.findViewById(R.id.ivStatusColor_BreakdownList);
+
         }
 
         public void bind(Machine machine, String key) {
-            machineName.setText(machine.getMachineName());
             machineLine.setText(machine.getMachineLine());
             machineStation.setText(machine.getMachineStation());
-            machineID.setText(machine.getMachineID());
+//            machineID.setText(machine.getMachineID());
+//            machineName.setText(machine.getMachineName());
             machineStatusColor.setImageResource(colorStatusList[Integer.parseInt(machine.getMachineStatus()) - 1]);
             this.key = key;
         }
     }
 
+
+    // Adapter
     class MachineAdapter extends RecyclerView.Adapter<MachineItemView> {
         private List<Machine> mMachineList;
         private List<String> mKeys;

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.app.android_machine_monitoring_mobile.shared.BaseActivity;
 import com.app.android_machine_monitoring_mobile.shared.machine.GetMachineData;
 import com.app.android_machine_monitoring_mobile.shared.machine.Machine;
-import com.app.android_machine_monitoring_mobile.shared.machine.RecyclerView_Config;
+import com.app.android_machine_monitoring_mobile.shared.machine.RecyclerView_Config_MachineDashboard;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ public class MachineDashboard extends BaseActivity {
             @Override
             public void DataIsLoaded(List<Machine> machineList, List<String> keys) {
                 findViewById(R.id.progressBar).setVisibility(View.GONE);
-                new RecyclerView_Config().setMachineListConfig(rvMachineListLine1, MachineDashboard.this, machineList, keys);
+                new RecyclerView_Config_MachineDashboard().setMachineListConfig(rvMachineListLine1, MachineDashboard.this, machineList, keys);
             }
 
             @Override
@@ -58,7 +58,7 @@ public class MachineDashboard extends BaseActivity {
             @Override
             public void DataIsLoaded(List<Machine> machineList, List<String> keys) {
                 findViewById(R.id.progressBar).setVisibility(View.GONE);
-                new RecyclerView_Config().setMachineListConfig(rvMachineListLine2, MachineDashboard.this, machineList, keys);
+                new RecyclerView_Config_MachineDashboard().setMachineListConfig(rvMachineListLine2, MachineDashboard.this, machineList, keys);
             }
 
             @Override

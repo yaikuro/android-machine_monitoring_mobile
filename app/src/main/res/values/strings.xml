@@ -37,5 +37,6 @@
     <string name="running">Running</string>
     <string name="coming_soon">Coming Soon</string>
     <string name="status_color">Status Color</string>
+    <string name="status_color_for_breakdown_list">Status Color for Breakdown List</string>
 
 </resources>

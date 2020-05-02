@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.app.android_machine_monitoring_mobile.shared.BaseActivity;
 import com.app.android_machine_monitoring_mobile.shared.machine.GetMachineData;
 import com.app.android_machine_monitoring_mobile.shared.machine.Machine;
-import com.app.android_machine_monitoring_mobile.shared.machine.RecyclerView_Config;
+import com.app.android_machine_monitoring_mobile.shared.machine.RecyclerView_Config_BreakdownList;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class BreakdownListActivity extends BaseActivity {
             @Override
             public void DataIsLoaded(List<Machine> machineList, List<String> keys) {
                 findViewById(R.id.progressBar).setVisibility(View.GONE);
-                new RecyclerView_Config().setBreakdownListConfig(rvBreakdownList, BreakdownListActivity.this, machineList, keys);
+                new RecyclerView_Config_BreakdownList().setBreakdownListConfig(rvBreakdownList, BreakdownListActivity.this, machineList, keys);
             }
 
             @Override

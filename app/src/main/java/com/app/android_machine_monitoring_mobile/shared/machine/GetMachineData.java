@@ -10,7 +10,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class GetMachineData {
 
@@ -34,7 +33,9 @@ public class GetMachineData {
                     for (DataSnapshot machineNode : lineNode.getChildren()) {
                         machines.add(machineNode.getKey());
                         Machine machine = machineNode.getValue(Machine.class);
-                        machineList.add(machine);
+                        if (machine.getMachineStatus().equals("2")) {
+                            machineList.add(machine);
+                        }
                     }
                 }
                 dataStatus.DataIsLoaded(machineList, machines);
