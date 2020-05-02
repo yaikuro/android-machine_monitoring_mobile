@@ -1,16 +1,20 @@
 package com.app.android_machine_monitoring_mobile.shared.machine;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.android_machine_monitoring_mobile.R;
+import com.app.android_machine_monitoring_mobile.UserProfile;
 
 import java.util.List;
 
@@ -54,6 +58,15 @@ public class RecyclerView_Config_BreakdownList {
 //            machineName = itemView.findViewById(R.id.txtMachineName);
             machineStatusColor = itemView.findViewById(R.id.ivStatusColor_BreakdownList);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, UserProfile.class);
+                    Toast.makeText(mContext, machineLine.getText().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, machineStation.getText().toString(), Toast.LENGTH_SHORT).show();
+                    mContext.startActivity(intent);
+                }
+            });
         }
 
         public void bind(Machine machine, String key) {
