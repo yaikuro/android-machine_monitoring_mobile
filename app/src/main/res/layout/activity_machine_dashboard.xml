@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".MachineDashboard">
 
@@ -33,7 +32,7 @@
             android:contentDescription="@string/running"
             android:src="@drawable/color_green" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/runninginfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,7 +50,7 @@
             android:contentDescription="@string/breakdown"
             android:src="@drawable/color_red" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/breakdowninfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -69,7 +68,7 @@
             android:contentDescription="@string/repairing"
             android:src="@drawable/color_yellow" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/repairOnProgress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -87,7 +86,7 @@
             android:contentDescription="@string/waiting_confirmation"
             android:src="@drawable/color_blue" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/finishRepairing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

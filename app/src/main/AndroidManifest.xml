@@ -3,6 +3,7 @@
     package="com.app.android_machine_monitoring_mobile">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -11,6 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.Light">
+        <activity android:name=".RepairBreakdownActivity"></activity>
+        <activity android:name=".QRScannerActivity"></activity>
         <activity
             android:name=".MachineDashboard"
             android:screenOrientation="fullSensor" />

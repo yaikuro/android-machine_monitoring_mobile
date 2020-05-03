@@ -1,26 +1,31 @@
 package com.app.android_machine_monitoring_mobile.shared.machine;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.app.android_machine_monitoring_mobile.QRScannerActivity;
 import com.app.android_machine_monitoring_mobile.R;
-import com.app.android_machine_monitoring_mobile.UserProfile;
 
 import java.util.List;
 
 public class RecyclerView_Config_BreakdownList {
     private Context mContext;
     private MachineAdapter machineAdapter;
+    private static final int ZBAR_CAMERA_PERMISSION = 100;
 
     private int[] colorStatusList = new int[]
             {
@@ -61,12 +66,20 @@ public class RecyclerView_Config_BreakdownList {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(mContext, UserProfile.class);
-                    Toast.makeText(mContext, machineLine.getText().toString(), Toast.LENGTH_SHORT).show();
-                    Toast.makeText(mContext, machineStation.getText().toString(), Toast.LENGTH_SHORT).show();
-                    mContext.startActivity(intent);
+                    if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.CAMERA)
+                            != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions((Activity) mContext,
+                                new String[]{Manifest.permission.CAMERA}, ZBAR_CAMERA_PERMISSION);
+                    } else {
+                        Intent intent = new Intent(mContext, QRScannerActivity.class);
+                        intent.putExtra("machineLine", machineLine.getText().toString());
+                        intent.putExtra("machineStation", machineStation.getText().toString());
+//                        intent.putExtra("machineName", machineName.getText().toString());
+                        mContext.startActivity(intent);
+                    }
                 }
             });
+
         }
 
         public void bind(Machine machine, String key) {
@@ -77,6 +90,8 @@ public class RecyclerView_Config_BreakdownList {
             machineStatusColor.setImageResource(colorStatusList[Integer.parseInt(machine.getMachineStatus()) - 1]);
             this.key = key;
         }
+
+
     }
 
 
@@ -106,4 +121,5 @@ public class RecyclerView_Config_BreakdownList {
             return mMachineList.size();
         }
     }
+
 }
