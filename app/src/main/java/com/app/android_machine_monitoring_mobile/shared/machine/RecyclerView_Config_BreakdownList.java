@@ -59,7 +59,7 @@ public class RecyclerView_Config_BreakdownList {
 
             machineLine = itemView.findViewById(R.id.txtMachineLine);
             machineStation = itemView.findViewById(R.id.txtMachineStation);
-//            machineID = itemView.findViewById(R.id.txtMachineID);
+            machineID = itemView.findViewById(R.id.txtMachineID);
 //            machineName = itemView.findViewById(R.id.txtMachineName);
             machineStatusColor = itemView.findViewById(R.id.ivStatusColor_BreakdownList);
 
@@ -74,6 +74,7 @@ public class RecyclerView_Config_BreakdownList {
                         Intent intent = new Intent(mContext, QRScannerActivity.class);
                         intent.putExtra("machineLine", machineLine.getText().toString());
                         intent.putExtra("machineStation", machineStation.getText().toString());
+                        intent.putExtra("machineID", machineID.getText().toString());
 //                        intent.putExtra("machineName", machineName.getText().toString());
                         mContext.startActivity(intent);
                     }
@@ -85,7 +86,7 @@ public class RecyclerView_Config_BreakdownList {
         public void bind(Machine machine, String key) {
             machineLine.setText(machine.getMachineLine());
             machineStation.setText(machine.getMachineStation());
-//            machineID.setText(machine.getMachineID());
+            machineID.setText(machine.getMachineID());
 //            machineName.setText(machine.getMachineName());
             machineStatusColor.setImageResource(colorStatusList[Integer.parseInt(machine.getMachineStatus()) - 1]);
             this.key = key;

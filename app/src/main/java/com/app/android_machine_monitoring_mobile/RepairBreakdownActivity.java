@@ -9,6 +9,7 @@ public class RepairBreakdownActivity extends AppCompatActivity {
 
     private String machineLine;
     private String machineStation;
+    private String machineID;
     private String currentResponseTime;
     private TextView txtMachineLine;
     private TextView txtMachineStation;
@@ -21,6 +22,7 @@ public class RepairBreakdownActivity extends AppCompatActivity {
 
         machineLine = getIntent().getStringExtra("machineLine");
         machineStation = getIntent().getStringExtra("machineStation");
+        machineID = getIntent().getStringExtra("machineID");
         currentResponseTime = getIntent().getStringExtra("currentResponseTime");
 
         // Views

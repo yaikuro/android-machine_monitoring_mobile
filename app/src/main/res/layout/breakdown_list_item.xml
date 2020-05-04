@@ -35,7 +35,7 @@
             android:layout_toEndOf="@id/ivStatusColor_BreakdownList"
             android:text="@string/line_doubledot"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -45,7 +45,7 @@
             android:layout_marginTop="5dp"
             android:layout_toEndOf="@id/Line1"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -57,7 +57,7 @@
             android:layout_toEndOf="@id/ivStatusColor_BreakdownList"
             android:text="@string/station_doubledot"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -67,7 +67,29 @@
             android:layout_below="@id/Line1"
             android:layout_toEndOf="@+id/Station1"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/MachineID1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Station1"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/ivStatusColor_BreakdownList"
+            android:text="@string/id_doubledot"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtMachineID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Station1"
+            android:layout_toEndOf="@+id/MachineID1"
+            android:textColor="@color/black"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <com.google.android.material.textview.MaterialTextView

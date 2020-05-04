@@ -19,12 +19,14 @@ public class QRScannerActivity extends BaseActivity implements ZXingScannerView.
 
     private String machineLine;
     private String machineStation;
+    private String machineID;
     private String machineName;
     private String qrCodeVerification;
     private String qrCodeResult;
 
     private TextView txtMachineLineInformation;
     private TextView txtMachineStationInformation;
+    private TextView txtMachineIDInformation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,7 @@ public class QRScannerActivity extends BaseActivity implements ZXingScannerView.
         // Get machine's information
         machineLine = getIntent().getStringExtra("machineLine");
         machineStation = getIntent().getStringExtra("machineStation");
-//        machineName = getIntent().getStringExtra("machineName");
+        machineID = getIntent().getStringExtra("machineID");
 
         // Initialize QR code
         ViewGroup contentFrame = findViewById(R.id.content_frame);
@@ -44,11 +46,13 @@ public class QRScannerActivity extends BaseActivity implements ZXingScannerView.
         // Views
         txtMachineLineInformation = findViewById(R.id.txtMachineLineInformation);
         txtMachineStationInformation = findViewById(R.id.txtMachineStationInformation);
+        txtMachineIDInformation = findViewById(R.id.txtMachineIDInformation);
         txtMachineLineInformation.setText("Line      : " + machineLine);
         txtMachineStationInformation.setText("Station : " + machineStation);
+        txtMachineIDInformation.setText("ID : " + machineID);
 
 
-        qrCodeVerification = "Line " + machineLine + ", " + "Station " + machineStation;
+        qrCodeVerification = "Line " + machineLine + ", " + "Station " + machineStation + "ID " + machineID;
 
     } // End of onCreate
 
@@ -64,6 +68,7 @@ public class QRScannerActivity extends BaseActivity implements ZXingScannerView.
                 Intent i = new Intent(this, RepairBreakdownActivity.class);
                 i.putExtra("machineLine", machineLine);
                 i.putExtra("machineStation", machineStation);
+                i.putExtra("machineID", machineID);
 //                i.putExtra("machineName", machineName);
                 i.putExtra("currentResponseTime", currentResponseTime);
                 startActivity(i);
