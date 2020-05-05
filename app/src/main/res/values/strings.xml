@@ -40,5 +40,17 @@
     <string name="status_color_for_breakdown_list">Status Color for Breakdown List</string>
     <string name="machine_name_doubledot">Machine Name :</string>
     <string name="id_doubledot">ID :</string>
+    <string name="machine_id_doubledot">Machine ID :</string>
+    <string name="date_doubledot">Date :</string>
+    <string name="date">Date</string>
+    <string name="duration_doubledot">Duration :</string>
+    <string name="pic_doubledot">PIC :</string>
+    <string name="pic">PIC</string>
+    <string name="problem_description">Problem Description</string>
+    <string name="solution_picture">Solution Picture</string>
+    <string name="solution_description">Solution Description</string>
+    <string name="skip">Skip</string>
+    <string name="machine_information">Machine Information</string>
+    <string name="machine_information_doubledot">Machine Information :</string>
 
 </resources>

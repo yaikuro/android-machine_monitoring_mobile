@@ -31,17 +31,19 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainDashboard extends BaseActivity implements View.OnClickListener {
-    private GoogleSignInClient mGoogleSignInclient;
-    private String TAG = "MainActivity";
-    private String uid, email, fullName, nickname, mobilePhoneNumber;
-    private TextView txtWelcomeUser;
-    private MaterialCardView cvUser, cvMachineDashboard, cvProblemWaitingList;
+    private int RC_SIGN_IN = 1;
+
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private FirebaseDatabase mDatabase;
     private DatabaseReference myRef;
-    private int RC_SIGN_IN = 1;
     private User user;
+    private GoogleSignInClient mGoogleSignInclient;
+
+    private String TAG = "MainActivity";
+    private String uid, email, fullName, nickname, mobilePhoneNumber;
+    private TextView txtWelcomeUser;
+    private MaterialCardView cvUser, cvMachineDashboard, cvProblemWaitingList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +52,10 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
 
         // Firebase
         mAuth = FirebaseAuth.getInstance();
+        uid = mAuth.getUid();
         mDatabase = FirebaseDatabase.getInstance();
         myRef = mDatabase.getReference("Users");
-        readFromDatabase();
+        readUserFromDatabase();
 
         // Views
         txtWelcomeUser = findViewById(R.id.txtWelcomeUser);
@@ -86,33 +89,16 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
         }
     }
 
-    private void signOut() {
-        mAuth.signOut();
-        goto_LoginActivity();
-    }
-
-    private void readFromDatabase() {
+    private void readUserFromDatabase() {
         // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
+        myRef.child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
 
-//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                    {
-//                        User user = snapshot.getValue(User.class);
-//                        String uid = user.getUid();
-//                        Toast.makeText(MainDashboard.this, uid, Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-
-                uid = mAuth.getUid();
-                email = dataSnapshot.child(uid).child("email").getValue().toString();
-                fullName = dataSnapshot.child(uid).child("fullName").getValue().toString();
-                nickname = dataSnapshot.child(uid).child("nickname").getValue().toString();
-                user = new User(uid, email, fullName, nickname, mobilePhoneNumber);
-                txtWelcomeUser.setText("Welcome " + nickname);
+                user = dataSnapshot.getValue(User.class);
+                txtWelcomeUser.setText("Welcome " + user.getNickname());
             }
 
             @Override
@@ -121,7 +107,6 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
-
     }
 
     private void updateUI(FirebaseUser fUser) {
@@ -191,12 +176,12 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        int i = v.getId();
-        if (i == R.id.cvUser) {
+        int id = v.getId();
+        if (id == R.id.cvUser) {
             goto_UserProfile();
-        } else if (i == R.id.cvMachineDashboard) {
+        } else if (id == R.id.cvMachineDashboard) {
             goto_MachineDashboard();
-        } else if (i == R.id.cvBreakdownList) {
+        } else if (id == R.id.cvBreakdownList) {
             goto_BreakdownListActivity();
         }
     }

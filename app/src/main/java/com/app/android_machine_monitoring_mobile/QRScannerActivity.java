@@ -2,6 +2,7 @@ package com.app.android_machine_monitoring_mobile;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,7 +15,7 @@ import java.util.Locale;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-public class QRScannerActivity extends BaseActivity implements ZXingScannerView.ResultHandler {
+public class QRScannerActivity extends BaseActivity implements ZXingScannerView.ResultHandler, View.OnClickListener {
     private ZXingScannerView mScannerView;
 
     private String machineLine;
@@ -27,6 +28,7 @@ public class QRScannerActivity extends BaseActivity implements ZXingScannerView.
     private TextView txtMachineLineInformation;
     private TextView txtMachineStationInformation;
     private TextView txtMachineIDInformation;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,16 +45,20 @@ public class QRScannerActivity extends BaseActivity implements ZXingScannerView.
         mScannerView = new ZXingScannerView(this);
         contentFrame.addView(mScannerView);
 
+        // Buttons
+        findViewById(R.id.btnSkipQRScan).setOnClickListener(this);
+
         // Views
         txtMachineLineInformation = findViewById(R.id.txtMachineLineInformation);
         txtMachineStationInformation = findViewById(R.id.txtMachineStationInformation);
         txtMachineIDInformation = findViewById(R.id.txtMachineIDInformation);
+
         txtMachineLineInformation.setText("Line      : " + machineLine);
         txtMachineStationInformation.setText("Station : " + machineStation);
         txtMachineIDInformation.setText("ID : " + machineID);
 
 
-        qrCodeVerification = "Line " + machineLine + ", " + "Station " + machineStation + "ID " + machineID;
+        qrCodeVerification = "Line " + machineLine + ", " + "Station " + machineStation + ", " + "ID " + machineID;
 
     } // End of onCreate
 
@@ -62,17 +68,9 @@ public class QRScannerActivity extends BaseActivity implements ZXingScannerView.
             mScannerView.resumeCameraPreview(this);
             Toast.makeText(this, "Wrong QR Code", Toast.LENGTH_SHORT).show();
         } else {
-            qrCodeResult = rawResult.getText().substring(0, 17);
+            qrCodeResult = rawResult.getText();
             if (qrCodeResult.equals(qrCodeVerification)) {
-                String currentResponseTime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault()).format(new Date());
-                Intent i = new Intent(this, RepairBreakdownActivity.class);
-                i.putExtra("machineLine", machineLine);
-                i.putExtra("machineStation", machineStation);
-                i.putExtra("machineID", machineID);
-//                i.putExtra("machineName", machineName);
-                i.putExtra("currentResponseTime", currentResponseTime);
-                startActivity(i);
-                finish();
+                goto_RepairBreakdownActivity();
             } else {
                 mScannerView.resumeCameraPreview(this);
                 Toast.makeText(this, "Machine ID does not match", Toast.LENGTH_SHORT).show();
@@ -93,4 +91,23 @@ public class QRScannerActivity extends BaseActivity implements ZXingScannerView.
         mScannerView.stopCamera();
     }
 
+    private void goto_RepairBreakdownActivity() {
+        String currentResponseTime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault()).format(new Date());
+        Intent i = new Intent(this, RepairBreakdownActivity.class);
+        i.putExtra("machineLine", machineLine);
+        i.putExtra("machineStation", machineStation);
+        i.putExtra("machineID", machineID);
+//                i.putExtra("machineName", machineName);
+        i.putExtra("currentResponseTime", currentResponseTime);
+        startActivity(i);
+        finish();
+    }
+
+    @Override
+    public void onClick(View v) {
+        int i = v.getId();
+        if (i == R.id.btnSkipQRScan) {
+            goto_RepairBreakdownActivity();
+        }
+    }
 }
