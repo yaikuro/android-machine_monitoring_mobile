@@ -156,6 +156,7 @@
     <!-- Scrollable view here -->
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
@@ -175,7 +176,7 @@
                 android:id="@+id/ivProblemPicture"
                 android:layout_width="match_parent"
                 android:layout_height="200sp"
-                android:layout_marginTop="360dp"
+                android:layout_marginTop="450dp"
                 android:layout_marginBottom="10dp"
                 android:contentDescription="@string/problem_description" />
 
