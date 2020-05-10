@@ -32,7 +32,7 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
     private User user;
 
     private String uid;
-    private String fullName;
+    private String fullNames;
     private String machineLine;
     private String machineStation;
     private String machineID;
