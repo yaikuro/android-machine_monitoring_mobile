@@ -109,7 +109,10 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
     }
 
     private void takeSolutionPicture() {
-
+        Intent i = new Intent();
+        i.setType("image/*");
+        i.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(i, PICK_SOLUTION_IMAGE);
     }
 
     @Override
@@ -134,6 +137,13 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
             Picasso.get()
                     .load(mImageUri)
                     .into(ivProblemPicture);
+        }
+        if (requestCode == PICK_SOLUTION_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            mImageUri = data.getData();
+
+            Picasso.get()
+                    .load(mImageUri)
+                    .into(ivSolutionPicture);
         }
     }
 }
