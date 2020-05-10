@@ -65,6 +65,7 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
         // Buttons
         findViewById(R.id.btnSave).setOnClickListener(this);
         ivProblemPicture = findViewById(R.id.ivProblemPicture);
+        ivSolutionPicture = findViewById(R.id.ivSolutionPicture);
         ivProblemPicture.setOnClickListener(this);
         ivSolutionPicture.setOnClickListener(this);
         findViewById(R.id.ivSolutionPicture).setOnClickListener(this);
