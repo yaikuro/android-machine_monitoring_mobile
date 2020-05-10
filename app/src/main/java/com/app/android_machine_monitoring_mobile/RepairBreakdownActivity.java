@@ -32,7 +32,7 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
     private User user;
 
     private String uid;
-    private String fullNames;
+    private String fullName;
     private String machineLine;
     private String machineStation;
     private String machineID;
@@ -42,6 +42,7 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
     private TextView txtCurrentTimeResponse;
     private Uri mImageUri;
     private ImageView ivProblemPicture;
+    private ImageView ivSolutionPicture;
 
 
     @Override
@@ -65,6 +66,7 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
         findViewById(R.id.btnSave).setOnClickListener(this);
         ivProblemPicture = findViewById(R.id.ivProblemPicture);
         ivProblemPicture.setOnClickListener(this);
+        ivSolutionPicture.setOnClickListener(this);
         findViewById(R.id.ivSolutionPicture).setOnClickListener(this);
 
         // Views
