@@ -29,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
@@ -43,6 +44,8 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
     private DatabaseReference mDatabaseUserRef;
     private DatabaseReference mDatabaseReportRef;
     private StorageReference mStorageRef;
+    private StorageTask mProblemUploadTask;
+    private StorageTask mSolutionUploadTask;
     private User user;
 
     private Uri mProblemImageUri;
@@ -153,10 +156,10 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
             final StorageReference solutionFileReference = mStorageRef.child(System.currentTimeMillis()
                     + "." + getFileExtension(mSolutionImageUri));
 
-            UploadTask problemUploadTask = problemFileReference.putFile(mProblemImageUri);
-            UploadTask solutionUploadTask = solutionFileReference.putFile(mSolutionImageUri);
+            mProblemUploadTask = problemFileReference.putFile(mProblemImageUri);
+            mSolutionUploadTask = solutionFileReference.putFile(mSolutionImageUri);
 
-            Task<Uri> problemUrlTask = problemUploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            mProblemUploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
                 public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                     if (!task.isSuccessful()) {
@@ -182,7 +185,7 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
                 }
             });
 
-            Task<Uri> solutionUrlTask = problemUploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            mSolutionUploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
                 public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                     if (!task.isSuccessful()) {
@@ -198,7 +201,7 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
                     if (task.isSuccessful()) {
                         Uri downloadUri = task.getResult();
 
-                        Report report = new Report(machineLine, machineStation, machineID, downloadUri.toString(), etProblemDescription.getText().toString(), currentResponseTime);
+                        Report report = new Report(machineLine, machineStation, machineID, downloadUri.toString(), etSolutionDescription.getText().toString(), currentResponseTime);
                         String uploadID = mDatabaseReportRef.push().getKey();
                         mDatabaseReportRef.child(uploadID).setValue(report);
                     } else {
@@ -218,7 +221,11 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.btnSave) {
-            uploadReport();
+            if (mProblemUploadTask != null && mProblemUploadTask.isInProgress() && mSolutionUploadTask != null && mSolutionUploadTask.isInProgress()) {
+                Toast.makeText(this, "Uploading report is in progress...", Toast.LENGTH_SHORT).show();
+            } else {
+                uploadReport();
+            }
 //            goto_MainDashboard();
         } else if (id == R.id.ivProblemPicture) {
             takeProblemPicture();
