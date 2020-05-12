@@ -44,8 +44,8 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
     private DatabaseReference mDatabaseUserRef;
     private DatabaseReference mDatabaseReportRef;
     private StorageReference mStorageRef;
-    private StorageTask mProblemUploadTask;
-    private StorageTask mSolutionUploadTask;
+    private StorageTask<UploadTask.TaskSnapshot> mProblemUploadTask;
+    private StorageTask<UploadTask.TaskSnapshot> mSolutionUploadTask;
     private User user;
 
     private Uri mProblemImageUri;
@@ -204,6 +204,8 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
                         Report report = new Report(machineLine, machineStation, machineID, downloadUri.toString(), etSolutionDescription.getText().toString(), currentResponseTime);
                         String uploadID = mDatabaseReportRef.push().getKey();
                         mDatabaseReportRef.child(uploadID).setValue(report);
+
+                        goto_MainDashboard();
                     } else {
                         // Handle failures
                         Toast.makeText(RepairBreakdownActivity.this, "Error: failed to upload to database", Toast.LENGTH_SHORT).show();
