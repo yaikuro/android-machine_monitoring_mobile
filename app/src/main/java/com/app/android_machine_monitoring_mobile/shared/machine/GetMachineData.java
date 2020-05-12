@@ -14,16 +14,16 @@ import java.util.List;
 public class GetMachineData {
 
     private FirebaseDatabase mDatabase;
-    private DatabaseReference myRef;
+    private DatabaseReference mDatabaseRef;
     private List<Machine> machineList = new ArrayList<>();
 
     public GetMachineData() {
         mDatabase = FirebaseDatabase.getInstance();
-        myRef = mDatabase.getReference("Machines");
+        mDatabaseRef = mDatabase.getReference("Machines");
     }
 
     public void readMachinesData(final DataStatus dataStatus) {
-        myRef.addValueEventListener(new ValueEventListener() {
+        mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 machineList.clear();
@@ -50,7 +50,7 @@ public class GetMachineData {
 
 
     public void readMachinesDataLine1(final DataStatus dataStatus) {
-        myRef.child("Line 1").addValueEventListener(new ValueEventListener() {
+        mDatabaseRef.child("Line 1").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 machineList.clear();
@@ -71,7 +71,7 @@ public class GetMachineData {
     }
 
     public void readMachinesDataLine2(final DataStatus dataStatus) {
-        myRef.child("Line 2").addValueEventListener(new ValueEventListener() {
+        mDatabaseRef.child("Line 2").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 machineList.clear();

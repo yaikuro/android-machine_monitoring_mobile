@@ -3,6 +3,7 @@ package com.app.android_machine_monitoring_mobile;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -36,7 +37,8 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private FirebaseDatabase mDatabase;
-    private DatabaseReference myRef;
+    // Press back again to exit
+    boolean doubleBackToExitPressedOnce = false;
     private User user;
     private GoogleSignInClient mGoogleSignInclient;
 
@@ -44,30 +46,7 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
     private String uid, email, fullName, nickname, mobilePhoneNumber;
     private TextView txtWelcomeUser;
     private MaterialCardView cvUser, cvMachineDashboard, cvProblemWaitingList;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        // Firebase
-        mAuth = FirebaseAuth.getInstance();
-        uid = mAuth.getUid();
-        mDatabase = FirebaseDatabase.getInstance();
-        myRef = mDatabase.getReference("Users");
-        readUserFromDatabase();
-
-        // Views
-        txtWelcomeUser = findViewById(R.id.txtWelcomeUser);
-
-
-        // Buttons
-        findViewById(R.id.cvUser).setOnClickListener(this);
-        findViewById(R.id.cvMachineDashboard).setOnClickListener(this);
-        findViewById(R.id.cvBreakdownList).setOnClickListener(this);
-
-
-    } // End of onCreate
+    private DatabaseReference mDatabaseRef;
 
     private void userProfile() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -89,25 +68,29 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
         }
     }
 
-    private void readUserFromDatabase() {
-        // Read from the database
-        myRef.child(uid).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-                user = dataSnapshot.getValue(User.class);
-                txtWelcomeUser.setText("Welcome " + user.getNickname());
-            }
+        // Firebase
+        mAuth = FirebaseAuth.getInstance();
+        uid = mAuth.getUid();
+        mDatabase = FirebaseDatabase.getInstance();
+        mDatabaseRef = mDatabase.getReference("Users");
+        readUserFromDatabase();
 
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
-    }
+        // Views
+        txtWelcomeUser = findViewById(R.id.txtWelcomeUser);
+
+
+        // Buttons
+        findViewById(R.id.cvUser).setOnClickListener(this);
+        findViewById(R.id.cvMachineDashboard).setOnClickListener(this);
+        findViewById(R.id.cvBreakdownList).setOnClickListener(this);
+
+
+    } // End of onCreate
 
     private void updateUI(FirebaseUser fUser) {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
@@ -173,6 +156,46 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
             }
         }
     }
+
+    private void readUserFromDatabase() {
+        // Read from the database
+        mDatabaseRef.child(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+
+                user = dataSnapshot.getValue(User.class);
+                txtWelcomeUser.setText("Welcome " + user.getNickname());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
+    }
+    // End of press back again to exit
 
     @Override
     public void onClick(View v) {

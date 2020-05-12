@@ -1,24 +1,35 @@
 package com.app.android_machine_monitoring_mobile;
 
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.MimeTypeMap;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.app.android_machine_monitoring_mobile.shared.BaseActivity;
+import com.app.android_machine_monitoring_mobile.shared.report.Report;
 import com.app.android_machine_monitoring_mobile.shared.user.User;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 public class RepairBreakdownActivity extends BaseActivity implements View.OnClickListener {
@@ -26,11 +37,16 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
     private static final int PICK_PROBLEM_IMAGE = 100;
     private static final int PICK_SOLUTION_IMAGE = 200;
 
+    // Firebase
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
-    private DatabaseReference myRef;
+    private DatabaseReference mDatabaseUserRef;
+    private DatabaseReference mDatabaseReportRef;
+    private StorageReference mStorageRef;
     private User user;
 
+    private Uri mProblemImageUri;
+    private Uri mSolutionImageUri;
     private String uid;
     private String fullName;
     private String machineLine;
@@ -40,7 +56,8 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
     private TextView txtMachineInfo;
     private TextView pic;
     private TextView txtCurrentTimeResponse;
-    private Uri mImageUri;
+    private EditText etProblemDescription;
+    private EditText etSolutionDescription;
     private ImageView ivProblemPicture;
     private ImageView ivSolutionPicture;
 
@@ -54,7 +71,9 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
         mAuth = FirebaseAuth.getInstance();
         uid = mAuth.getUid();
         mDatabase = FirebaseDatabase.getInstance();
-        myRef = mDatabase.getReference("Users");
+        mDatabaseUserRef = mDatabase.getReference("Users");
+        mDatabaseReportRef = mDatabase.getReference("Report");
+        mStorageRef = FirebaseStorage.getInstance().getReference("Report");
         readUserFromDatabase();
 
         machineLine = getIntent().getStringExtra("machineLine");
@@ -74,6 +93,9 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
         txtMachineInfo = findViewById(R.id.txtMachineInfo);
         txtCurrentTimeResponse = findViewById(R.id.txtCurrentDate);
         pic = findViewById(R.id.txtPIC);
+        etProblemDescription = findViewById(R.id.etProblemDescription);
+        etSolutionDescription = findViewById(R.id.etSolutionDescription);
+
 
         txtMachineInfo.setText("Line " + machineLine + ", " + "Station " + machineStation + ", " + "ID " + machineID);
         txtCurrentTimeResponse.setText(currentResponseTime);
@@ -83,7 +105,7 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
 
     private void readUserFromDatabase() {
         // Read from the database
-        myRef.child(uid).addValueEventListener(new ValueEventListener() {
+        mDatabaseUserRef.child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
@@ -115,11 +137,89 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
         startActivityForResult(i, PICK_SOLUTION_IMAGE);
     }
 
+    // Get the file extension and then change it to .jpg
+    private String getFileExtension(Uri uri) {
+        ContentResolver contentResolver = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(contentResolver.getType(uri));
+    }
+
+    private void uploadReport() {
+        if (mProblemImageUri != null && mSolutionImageUri != null) {
+
+            final StorageReference problemFileReference = mStorageRef.child(System.currentTimeMillis()
+                    + "." + getFileExtension(mProblemImageUri));
+
+            final StorageReference solutionFileReference = mStorageRef.child(System.currentTimeMillis()
+                    + "." + getFileExtension(mSolutionImageUri));
+
+            UploadTask problemUploadTask = problemFileReference.putFile(mProblemImageUri);
+            UploadTask solutionUploadTask = solutionFileReference.putFile(mSolutionImageUri);
+
+            Task<Uri> problemUrlTask = problemUploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+
+                    // Continue with the task to get the download URL
+                    return problemFileReference.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        Uri downloadUri = task.getResult();
+
+                        Report report = new Report(machineLine, machineStation, machineID, downloadUri.toString(), etProblemDescription.getText().toString(), currentResponseTime);
+                        String uploadID = mDatabaseReportRef.push().getKey();
+                        mDatabaseReportRef.child(uploadID).setValue(report);
+                    } else {
+                        // Handle failures
+                        Toast.makeText(RepairBreakdownActivity.this, "Error: failed to upload to database", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+            Task<Uri> solutionUrlTask = problemUploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+
+                    // Continue with the task to get the download URL
+                    return solutionFileReference.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        Uri downloadUri = task.getResult();
+
+                        Report report = new Report(machineLine, machineStation, machineID, downloadUri.toString(), etProblemDescription.getText().toString(), currentResponseTime);
+                        String uploadID = mDatabaseReportRef.push().getKey();
+                        mDatabaseReportRef.child(uploadID).setValue(report);
+                    } else {
+                        // Handle failures
+                        Toast.makeText(RepairBreakdownActivity.this, "Error: failed to upload to database", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+
+        } else {
+            Toast.makeText(this, "Error. No image taken", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.btnSave) {
-            goto_MainDashboard();
+            uploadReport();
+//            goto_MainDashboard();
         } else if (id == R.id.ivProblemPicture) {
             takeProblemPicture();
         } else if (id == R.id.ivSolutionPicture) {
@@ -132,17 +232,17 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == PICK_PROBLEM_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            mImageUri = data.getData();
+            mProblemImageUri = data.getData();
 
             Picasso.get()
-                    .load(mImageUri)
+                    .load(mProblemImageUri)
                     .into(ivProblemPicture);
         }
         if (requestCode == PICK_SOLUTION_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            mImageUri = data.getData();
+            mSolutionImageUri = data.getData();
 
             Picasso.get()
-                    .load(mImageUri)
+                    .load(mSolutionImageUri)
                     .into(ivSolutionPicture);
         }
     }

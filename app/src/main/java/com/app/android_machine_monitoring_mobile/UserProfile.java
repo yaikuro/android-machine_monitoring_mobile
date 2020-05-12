@@ -27,7 +27,7 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
             txtUserProfileUid;
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
-    private DatabaseReference myRef;
+    private DatabaseReference mDatabaseRef;
     private User user;
 
     @Override
@@ -39,7 +39,7 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
         mAuth = FirebaseAuth.getInstance();
         uid = mAuth.getUid();
         mDatabase = FirebaseDatabase.getInstance();
-        myRef = mDatabase.getReference("Users");
+        mDatabaseRef = mDatabase.getReference("Users");
         readUserInfoFromDatabase();
 
         // Views
@@ -56,7 +56,7 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
 
     private void readUserInfoFromDatabase() {
         // Read user info from the database
-        myRef.child(uid).addValueEventListener(new ValueEventListener() {
+        mDatabaseRef.child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
