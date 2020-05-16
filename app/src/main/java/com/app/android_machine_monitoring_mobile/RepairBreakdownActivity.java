@@ -100,7 +100,7 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
         etSolutionDescription = findViewById(R.id.etSolutionDescription);
 
 
-        txtMachineInfo.setText("Line " + machineLine + ", " + "Station " + machineStation + ", " + "ID " + machineID);
+        txtMachineInfo.setText(getString(R.string.stringMachineInfo, machineLine, machineStation, machineID));
         txtCurrentTimeResponse.setText(currentResponseTime);
 
 
