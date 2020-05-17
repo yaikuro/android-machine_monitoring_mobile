@@ -37,8 +37,8 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:layout_weight="1"
-                android:src="@drawable/google_icon"
                 android:contentDescription="@string/profile_picture"
+                android:src="@drawable/google_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/txtWelcomeUser"
                 app:layout_constraintStart_toStartOf="parent"
@@ -115,97 +115,6 @@
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardView_Progress"
-        style="@style/Widget.MaterialComponents.CardView"
-        android:layout_width="@dimen/card_view_width_hp"
-        android:layout_height="@dimen/card_view_height_hp"
-        android:layout_marginLeft="@dimen/material_card_spacing"
-        android:layout_marginTop="@dimen/material_card_spacing"
-        android:layout_marginRight="@dimen/material_card_spacing"
-        android:clickable="true"
-        android:minHeight="50dp"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="6dp"
-        app:layout_constraintEnd_toStartOf="@id/cvBreakdownList"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cvMachineDashboard">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <RelativeLayout
-                android:layout_width="84dp"
-                android:layout_height="77dp"
-                app:layout_constraintBottom_toTopOf="@+id/cardView_MachineDashboard"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <RelativeLayout
-                    android:id="@+id/relLayout_customProgressCircleBar"
-                    android:layout_width="64dp"
-                    android:layout_height="57dp"
-                    android:layout_centerHorizontal="true">
-
-                    <!--                    <ProgressBar-->
-                    <!--                        android:id="@+id/progressBar"-->
-                    <!--                        style="?android:attr/progressBarStyleHorizontal"-->
-                    <!--                        android:layout_width="match_parent"-->
-                    <!--                        android:layout_height="match_parent"-->
-                    <!--                        android:layout_centerHorizontal="true"-->
-                    <!--                        android:indeterminate="false"-->
-                    <!--                        android:max="100"-->
-                    <!--                        android:progress="0"-->
-                    <!--                        android:progressDrawable="@drawable/custom_progressbar_drawable"-->
-                    <!--                        android:secondaryProgress="0" />-->
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/txtProgress"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:text="@string/coming_soon"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </RelativeLayout>
-
-                <!--                <TextView-->
-                <!--                    android:id="@+id/progress_counter"-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_below="@+id/relLayout_customProgressCircleBar"-->
-                <!--                    android:layout_centerHorizontal="true"-->
-                <!--                    android:text="@string/_00" />-->
-            </RelativeLayout>
-
-            <!--            <TextView-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:text="@string/today_s_progress"-->
-            <!--                android:textAlignment="center"-->
-            <!--                android:textColor="@color/black"-->
-            <!--                android:textSize="@dimen/card_view_text_hp"-->
-            <!--                android:textStyle="bold" />-->
-
-        </LinearLayout>
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
         android:id="@+id/cvBreakdownList"
         style="@style/Widget.MaterialComponents.CardView"
         android:layout_width="@dimen/card_view_width_hp"
@@ -217,8 +126,8 @@
         android:minHeight="50dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="6dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/cardView_Progress"
+        app:layout_constraintEnd_toStartOf="@id/cvReportHistory"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cvMachineDashboard">
 
         <LinearLayout
@@ -247,6 +156,47 @@
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvReportHistory"
+        style="@style/Widget.MaterialComponents.CardView"
+        android:layout_width="@dimen/card_view_width_hp"
+        android:layout_height="@dimen/card_view_height_hp"
+        android:layout_marginLeft="@dimen/material_card_spacing"
+        android:layout_marginTop="@dimen/material_card_spacing"
+        android:layout_marginRight="@dimen/material_card_spacing"
+        android:clickable="true"
+        android:minHeight="50dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/cvBreakdownList"
+        app:layout_constraintTop_toBottomOf="@id/cvMachineDashboard">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="@dimen/card_view_image_width_hp"
+                android:layout_height="@dimen/card_view_image_height_hp"
+                android:src="@drawable/machine_icon3" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/report_history"
+                android:textColor="@color/black"
+                android:textSize="@dimen/card_view_text_hp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardView_comingsoon1"
         style="@style/Widget.MaterialComponents.CardView"
         android:layout_width="@dimen/card_view_width_hp"
@@ -260,7 +210,7 @@
         app:cardElevation="6dp"
         app:layout_constraintEnd_toStartOf="@+id/cardView_comingsoon2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardView_Progress">
+        app:layout_constraintTop_toBottomOf="@id/cvBreakdownList">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -269,69 +219,20 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <RelativeLayout
-                android:layout_width="84dp"
-                android:layout_height="77dp"
-                app:layout_constraintBottom_toTopOf="@+id/cardView_Progress"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+            <!--            <ImageView-->
+            <!--                android:layout_width="@dimen/card_view_image_width_hp"-->
+            <!--                android:layout_height="@dimen/card_view_image_height_hp"-->
+            <!--                android:src="@drawable/machine_icon3" />-->
 
-                <RelativeLayout
-                    android:id="@+id/relLayout_customProgressCircleBar1"
-                    android:layout_width="64dp"
-                    android:layout_height="57dp"
-                    android:layout_centerHorizontal="true">
-
-                    <!--                    <ProgressBar-->
-                    <!--                        android:id="@+id/progressBar1"-->
-                    <!--                        style="?android:attr/progressBarStyleHorizontal"-->
-                    <!--                        android:layout_width="match_parent"-->
-                    <!--                        android:layout_height="match_parent"-->
-                    <!--                        android:layout_centerHorizontal="true"-->
-                    <!--                        android:indeterminate="false"-->
-                    <!--                        android:max="100"-->
-                    <!--                        android:progress="0"-->
-                    <!--                        android:progressDrawable="@drawable/custom_progressbar_drawable"-->
-                    <!--                        android:secondaryProgress="0" />-->
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/txtProgress1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:text="@string/coming_soon"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </RelativeLayout>
-
-                <!--                <TextView-->
-                <!--                    android:id="@+id/progress_counter1"-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_below="@+id/relLayout_customProgressCircleBar1"-->
-                <!--                    android:layout_centerHorizontal="true"-->
-                <!--                    android:text="@string/_00" />-->
-            </RelativeLayout>
-
-            <!--            <TextView-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:text="@string/coming_soon"-->
-            <!--                android:textAlignment="center"-->
-            <!--                android:textColor="@color/black"-->
-            <!--                android:textSize="@dimen/card_view_text_hp"-->
-            <!--                android:textStyle="bold" />-->
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/coming_soon"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/card_view_text_hp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -351,7 +252,7 @@
         app:cardElevation="6dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cardView_comingsoon1"
-        app:layout_constraintTop_toBottomOf="@id/cvBreakdownList">
+        app:layout_constraintTop_toBottomOf="@id/cvReportHistory">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -360,10 +261,10 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <ImageView
-                android:layout_width="@dimen/card_view_image_width_hp"
-                android:layout_height="@dimen/card_view_image_height_hp"
-                android:src="@drawable/machine_icon3" />
+            <!--            <ImageView-->
+            <!--                android:layout_width="@dimen/card_view_image_width_hp"-->
+            <!--                android:layout_height="@dimen/card_view_image_height_hp"-->
+            <!--                android:src="@drawable/machine_icon3" />-->
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"

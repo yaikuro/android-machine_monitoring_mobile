@@ -55,7 +55,7 @@ public class RecyclerView_Config_BreakdownList {
 
         public MachineItemView(ViewGroup parent) {
             super(LayoutInflater.from(mContext)
-                    .inflate(R.layout.breakdown_list_item, parent, false));
+                    .inflate(R.layout.breakdown_listitem, parent, false));
 
             machineLine = itemView.findViewById(R.id.txtMachineLine);
             machineStation = itemView.findViewById(R.id.txtMachineStation);

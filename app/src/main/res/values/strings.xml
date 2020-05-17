@@ -58,5 +58,6 @@
     <string name="skip">Skip</string>
     <string name="machine_information">Machine Information</string>
     <string name="machine_information_doubledot">Machine Information :</string>
+    <string name="report_history">Report History</string>
 
 </resources>

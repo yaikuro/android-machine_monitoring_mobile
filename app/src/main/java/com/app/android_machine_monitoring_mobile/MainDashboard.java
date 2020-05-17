@@ -88,6 +88,7 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
         findViewById(R.id.cvUser).setOnClickListener(this);
         findViewById(R.id.cvMachineDashboard).setOnClickListener(this);
         findViewById(R.id.cvBreakdownList).setOnClickListener(this);
+        findViewById(R.id.cvReportHistory).setOnClickListener(this);
 
 
     } // End of onCreate
@@ -177,6 +178,7 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
         });
     }
 
+    // Press back twice to exit
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
@@ -195,7 +197,7 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
             }
         }, 2000);
     }
-    // End of press back again to exit
+    // End of press back twice to exit
 
     @Override
     public void onClick(View v) {
@@ -206,6 +208,8 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
             goto_MachineDashboard();
         } else if (id == R.id.cvBreakdownList) {
             goto_BreakdownListActivity();
+        } else if (id == R.id.cvReportHistory) {
+            goto_ReportHistoryActivity();
         }
     }
 }
