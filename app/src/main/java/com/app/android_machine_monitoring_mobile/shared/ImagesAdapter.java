@@ -39,6 +39,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImagesView
         holder.txtName.setText(reportCurrent.getReportImageDescription());
         Picasso.get()
                 .load(reportCurrent.getReportImageUrl())
+                .placeholder(R.mipmap.ic_launcher)
                 .fit()
                 .centerCrop()
                 .into(holder.ivImageDescription);
