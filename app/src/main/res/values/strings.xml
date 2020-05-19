@@ -59,5 +59,6 @@
     <string name="machine_information">Machine Information</string>
     <string name="machine_information_doubledot">Machine Information :</string>
     <string name="report_history">Report History</string>
+    <string name="upload_time_doubledot">Upload Time :</string>
 
 </resources>

@@ -1,18 +1,25 @@
 package com.app.android_machine_monitoring_mobile.shared.report;
 
+import com.google.firebase.database.Exclude;
+
 public class Report {
     private String reportMachineLine;
     private String reportMachineStation;
     private String reportMachineID;
-    private String reportImageUrl;
-    private String reportImageDescription;
+    private String reportProblemImageUrl;
+    private String reportSolutionImageUrl;
+    private String reportProblemImageDescription;
+    private String reportSolutionImageDescription;
     private String reportUploadTime;
+
+    private String mKey;
 
     public Report() {
         // Empty constructor needed
     }
 
-    public Report(String reportMachineLine, String reportMachineStation, String reportMachineID, String reportImageUrl, String reportImageDescription, String reportUploadTime) {
+    public Report(String reportMachineLine, String reportMachineStation, String reportMachineID, String reportImageUrl, String reportImageDescription,
+                  String reportSolutionImageUrl, String reportSolutionImageDescription, String reportUploadTime) {
 
         if (reportImageDescription.trim().equals("")) {
             reportImageDescription = "No description";
@@ -21,8 +28,10 @@ public class Report {
         this.reportMachineLine = reportMachineLine;
         this.reportMachineStation = reportMachineStation;
         this.reportMachineID = reportMachineID;
-        this.reportImageUrl = reportImageUrl;
-        this.reportImageDescription = reportImageDescription;
+        this.reportProblemImageUrl = reportImageUrl;
+        this.reportProblemImageDescription = reportImageDescription;
+        this.reportSolutionImageUrl = reportSolutionImageUrl;
+        this.reportSolutionImageDescription = reportSolutionImageDescription;
         this.reportUploadTime = reportUploadTime;
     }
 
@@ -50,20 +59,36 @@ public class Report {
         this.reportMachineID = reportMachineID;
     }
 
-    public String getReportImageUrl() {
-        return reportImageUrl;
+    public String getReportProblemImageUrl() {
+        return reportProblemImageUrl;
     }
 
-    public void setReportImageUrl(String reportImageUrl) {
-        this.reportImageUrl = reportImageUrl;
+    public void setReportProblemImageUrl(String reportProblemImageUrl) {
+        this.reportProblemImageUrl = reportProblemImageUrl;
     }
 
-    public String getReportImageDescription() {
-        return reportImageDescription;
+    public String getReportSolutionImageUrl() {
+        return reportSolutionImageUrl;
     }
 
-    public void setReportImageDescription(String reportImageDescription) {
-        this.reportImageDescription = reportImageDescription;
+    public void setReportSolutionImageUrl(String reportSolutionImageUrl) {
+        this.reportSolutionImageUrl = reportSolutionImageUrl;
+    }
+
+    public String getReportProblemImageDescription() {
+        return reportProblemImageDescription;
+    }
+
+    public void setReportProblemImageDescription(String reportProblemImageDescription) {
+        this.reportProblemImageDescription = reportProblemImageDescription;
+    }
+
+    public String getReportSolutionImageDescription() {
+        return reportSolutionImageDescription;
+    }
+
+    public void setReportSolutionImageDescription(String reportSolutionImageDescription) {
+        this.reportSolutionImageDescription = reportSolutionImageDescription;
     }
 
     public String getReportUploadTime() {
@@ -72,5 +97,14 @@ public class Report {
 
     public void setReportUploadTime(String reportUploadTime) {
         this.reportUploadTime = reportUploadTime;
+    }
+
+    @Exclude
+    public String getKey() {
+        return mKey;
+    }
+
+    public void setKey(String key) {
+        mKey = key;
     }
 }

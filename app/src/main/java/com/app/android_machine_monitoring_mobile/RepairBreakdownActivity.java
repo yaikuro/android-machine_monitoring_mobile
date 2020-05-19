@@ -75,14 +75,9 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
         uid = mAuth.getUid();
         mDatabase = FirebaseDatabase.getInstance();
         mDatabaseUserRef = mDatabase.getReference("Users");
-        mDatabaseReportRef = mDatabase.getReference("Report");
-        mStorageRef = FirebaseStorage.getInstance().getReference("Report");
+        mDatabaseReportRef = mDatabase.getReference("Reports");
+        mStorageRef = FirebaseStorage.getInstance().getReference("Reports");
         readUserFromDatabase();
-
-        machineLine = getIntent().getStringExtra("machineLine");
-        machineStation = getIntent().getStringExtra("machineStation");
-        machineID = getIntent().getStringExtra("machineID");
-        currentResponseTime = getIntent().getStringExtra("currentResponseTime");
 
         // Buttons
         findViewById(R.id.btnSave).setOnClickListener(this);
@@ -98,6 +93,12 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
         pic = findViewById(R.id.txtPIC);
         etProblemDescription = findViewById(R.id.etProblemDescription);
         etSolutionDescription = findViewById(R.id.etSolutionDescription);
+
+        // Get variables from previous activity
+        machineLine = getIntent().getStringExtra("machineLine");
+        machineStation = getIntent().getStringExtra("machineStation");
+        machineID = getIntent().getStringExtra("machineID");
+        currentResponseTime = getIntent().getStringExtra("currentResponseTime");
 
 
         txtMachineInfo.setText(getString(R.string.stringMachineInfo, machineLine, machineStation, machineID));
@@ -148,6 +149,8 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
     }
 
     private void uploadReport() {
+        final String uploadID = mDatabaseReportRef.push().getKey();
+
         if (mProblemImageUri != null && mSolutionImageUri != null) {
 
             final StorageReference problemFileReference = mStorageRef.child(System.currentTimeMillis()
@@ -175,42 +178,43 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
                     if (task.isSuccessful()) {
                         Uri downloadUri = task.getResult();
 
-                        Report report = new Report(machineLine, machineStation, machineID, downloadUri.toString(), etProblemDescription.getText().toString(), currentResponseTime);
-                        String uploadID = mDatabaseReportRef.push().getKey();
+                        Report report = new Report(machineLine, machineStation, machineID, downloadUri.toString(), etProblemDescription.getText().toString(),
+                                "Solution image is not available", "Solution description is not available", currentResponseTime);
                         mDatabaseReportRef.child(uploadID).setValue(report);
                     } else {
                         // Handle failures
-                        Toast.makeText(RepairBreakdownActivity.this, "Error: failed to upload to database", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-
-            mSolutionUploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
+                        Toast.makeText(RepairBreakdownActivity.this, "Failed to upload to database", Toast.LENGTH_SHORT).show();
                     }
 
-                    // Continue with the task to get the download URL
-                    return solutionFileReference.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()) {
-                        Uri downloadUri = task.getResult();
+                    mSolutionUploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                        @Override
+                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                            if (!task.isSuccessful()) {
+                                throw task.getException();
+                            }
 
-                        Report report = new Report(machineLine, machineStation, machineID, downloadUri.toString(), etSolutionDescription.getText().toString(), currentResponseTime);
-                        String uploadID = mDatabaseReportRef.push().getKey();
-                        mDatabaseReportRef.child(uploadID).setValue(report);
+                            // Continue with the task to get the download URL
+                            return solutionFileReference.getDownloadUrl();
+                        }
+                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            if (task.isSuccessful()) {
+                                Uri downloadUri = task.getResult();
 
-                        goto_MainDashboard();
-                    } else {
-                        // Handle failures
-                        Toast.makeText(RepairBreakdownActivity.this, "Error: failed to upload to database", Toast.LENGTH_SHORT).show();
-                    }
+                                mDatabaseReportRef.child(uploadID).child("reportSolutionImageUrl").setValue(downloadUri.toString());
+                                mDatabaseReportRef.child(uploadID).child("reportSolutionImageDescription").setValue(etSolutionDescription.getText().toString());
+
+                                goto_MainDashboard();
+                            } else {
+                                // Handle failures
+                                Toast.makeText(RepairBreakdownActivity.this, "Failed to upload to database", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
                 }
+
             });
 
 
