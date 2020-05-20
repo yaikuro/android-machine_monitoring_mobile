@@ -93,6 +93,26 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
 
     } // End of onCreate
 
+    private void readUserFromDatabase() {
+        // Read from the database
+        mDatabaseRef.child(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+
+                user = dataSnapshot.getValue(User.class);
+                txtWelcomeUser.setText("Welcome " + user.getNickname());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+    }
+
     private void updateUI(FirebaseUser fUser) {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
 
@@ -158,25 +178,7 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
         }
     }
 
-    private void readUserFromDatabase() {
-        // Read from the database
-        mDatabaseRef.child(uid).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
 
-                user = dataSnapshot.getValue(User.class);
-                txtWelcomeUser.setText("Welcome " + user.getNickname());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
-    }
 
     // Press back twice to exit
     @Override

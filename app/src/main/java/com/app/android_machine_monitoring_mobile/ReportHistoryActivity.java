@@ -1,15 +1,16 @@
 package com.app.android_machine_monitoring_mobile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.app.android_machine_monitoring_mobile.shared.BaseActivity;
 import com.app.android_machine_monitoring_mobile.shared.report.Report;
 import com.app.android_machine_monitoring_mobile.shared.report.ReportHistoryAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -21,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReportHistoryActivity extends AppCompatActivity implements ReportHistoryAdapter.OnItemClickListener {
+public class ReportHistoryActivity extends BaseActivity implements ReportHistoryAdapter.OnItemClickListener {
     private RecyclerView mRecyclerView;
     private ReportHistoryAdapter mAdapter;
 
@@ -42,9 +43,9 @@ public class ReportHistoryActivity extends AppCompatActivity implements ReportHi
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         mReports = new ArrayList<>();
-        mAdapter = new ReportHistoryAdapter(ReportHistoryActivity.this, mReports);
+        mAdapter = new ReportHistoryAdapter(this, mReports);
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(ReportHistoryActivity.this);
+        mAdapter.setOnItemClickListener(this);
 
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Reports");
         readReportsFromFirebase();
@@ -81,7 +82,9 @@ public class ReportHistoryActivity extends AppCompatActivity implements ReportHi
     public void onItemClick(int position) {
         Report selectedItem = mReports.get(position);
         String selectedKey = selectedItem.getKey();
-        Toast.makeText(this, selectedKey, Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(this, DetailedReportHistoryActivity.class);
+        i.putExtra("selectedKey", selectedKey);
+        startActivity(i);
     }
 
     @Override

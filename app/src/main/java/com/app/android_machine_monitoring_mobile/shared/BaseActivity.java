@@ -10,6 +10,7 @@ import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.app.android_machine_monitoring_mobile.BreakdownListActivity;
+import com.app.android_machine_monitoring_mobile.DetailedReportHistoryActivity;
 import com.app.android_machine_monitoring_mobile.LoginActivity;
 import com.app.android_machine_monitoring_mobile.MachineDashboard;
 import com.app.android_machine_monitoring_mobile.MainDashboard;
@@ -86,6 +87,11 @@ public class BaseActivity extends AppCompatActivity {
 
     public void goto_ReportHistoryActivity() {
         Intent i = new Intent(this, ReportHistoryActivity.class);
+        startActivity(i);
+    }
+
+    public void goto_DetailedReportHistoryActivity() {
+        Intent i = new Intent(this, DetailedReportHistoryActivity.class);
         startActivity(i);
     }
 
