@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,6 +14,7 @@ import androidx.annotation.NonNull;
 
 import com.app.android_machine_monitoring_mobile.shared.BaseActivity;
 import com.app.android_machine_monitoring_mobile.shared.user.User;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -30,23 +32,28 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 public class MainDashboard extends BaseActivity implements View.OnClickListener {
+    boolean doubleBackToExitPressedOnce = false;
     private int RC_SIGN_IN = 1;
-
+    private String TAG = "MainActivity";
+    // Firebase
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private FirebaseDatabase mDatabase;
-    // Press back again to exit
-    boolean doubleBackToExitPressedOnce = false;
+    private DatabaseReference mDatabaseRef;
     private User user;
     private GoogleSignInClient mGoogleSignInclient;
 
-    private String TAG = "MainActivity";
+
     private String uid, email, fullName, nickname, mobilePhoneNumber;
     private TextView txtWelcomeUser;
+    private ImageView ivUserProfilePicture;
     private MaterialCardView cvUser, cvMachineDashboard, cvProblemWaitingList;
-    private DatabaseReference mDatabaseRef;
+
+
+    private ShimmerFrameLayout container;
 
     private void userProfile() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -73,6 +80,9 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        container = findViewById(R.id.shimmer_view_container);
+        container.startShimmer(); // If auto-start is set to false
+
         // Firebase
         mAuth = FirebaseAuth.getInstance();
         uid = mAuth.getUid();
@@ -82,6 +92,7 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
 
         // Views
         txtWelcomeUser = findViewById(R.id.txtWelcomeUser);
+        ivUserProfilePicture = findViewById(R.id.ivUserProfilePicture);
 
 
         // Buttons
@@ -102,13 +113,25 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
                 // whenever data at this location is updated.
 
                 user = dataSnapshot.getValue(User.class);
+
                 txtWelcomeUser.setText(getString(R.string.stringWelcome, user.getNickname()));
+
+                Picasso.get()
+                        .load(user.getUserProfilePictureUrl())
+                        .fit()
+                        .centerCrop()
+                        .into(ivUserProfilePicture);
+
+                container.stopShimmer();
+                container.setShimmer(null);
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
                 Log.w(TAG, "Failed to read value.", error.toException());
+                container.stopShimmer();
+                container.setShimmer(null);
             }
         });
     }

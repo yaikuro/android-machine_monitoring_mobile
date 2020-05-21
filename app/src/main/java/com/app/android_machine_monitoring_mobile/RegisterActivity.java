@@ -94,7 +94,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     private void writeNewUser(String email, String fullName, String nickname, String mobilePhoneNumber) {
         String uid = mAuth.getUid();
-        User user = new User(uid, email, fullName, nickname, mobilePhoneNumber);
+        User user = new User(uid, email, fullName, nickname, mobilePhoneNumber, "");
         mDatabase.child(user.getUid()).setValue(user);
     }
 

@@ -18,18 +18,18 @@ public class Report {
         // Empty constructor needed
     }
 
-    public Report(String reportMachineLine, String reportMachineStation, String reportMachineID, String reportImageUrl, String reportImageDescription,
+    public Report(String reportMachineLine, String reportMachineStation, String reportMachineID, String reportImageUrl, String reportProblemImageDescription,
                   String reportSolutionImageUrl, String reportSolutionImageDescription, String reportUploadTime) {
 
-        if (reportImageDescription.trim().equals("")) {
-            reportImageDescription = "No description";
+        if (reportProblemImageDescription.trim().equals("")) {
+            reportProblemImageDescription = "No description";
         }
 
         this.reportMachineLine = reportMachineLine;
         this.reportMachineStation = reportMachineStation;
         this.reportMachineID = reportMachineID;
         this.reportProblemImageUrl = reportImageUrl;
-        this.reportProblemImageDescription = reportImageDescription;
+        this.reportProblemImageDescription = reportProblemImageDescription;
         this.reportSolutionImageUrl = reportSolutionImageUrl;
         this.reportSolutionImageDescription = reportSolutionImageDescription;
         this.reportUploadTime = reportUploadTime;

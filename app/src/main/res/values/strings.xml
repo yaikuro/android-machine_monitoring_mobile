@@ -67,5 +67,8 @@
     <string name="upload_time">Upload Time</string>
     <string name="problem_image">Problem Image</string>
     <string name="solution_image">Solution Image</string>
+    <string name="breakdown_time">Breakdown Time</string>
+    <string name="user_profile_picture">User Profile Picture</string>
+    <string name="save_changes">Save Changes</string>
 
 </resources>

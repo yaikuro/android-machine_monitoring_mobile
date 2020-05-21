@@ -34,6 +34,10 @@ public class GetMachineData {
                         machines.add(machineNode.getKey());
                         Machine machine = machineNode.getValue(Machine.class);
                         if (machine.getMachineStatus().equals("2")) {
+
+//                             Should be removed after testing
+//                            String currentBreakdownTime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault()).format(new Date());
+//                            machine.setMachineBreakdownTime(currentBreakdownTime);
                             machineList.add(machine);
                         }
                     }

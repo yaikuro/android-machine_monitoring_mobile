@@ -51,7 +51,6 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
     private Uri mProblemImageUri;
     private Uri mSolutionImageUri;
     private String uid;
-    private String fullName;
     private String machineLine;
     private String machineStation;
     private String machineID;
@@ -85,7 +84,6 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
         ivSolutionPicture = findViewById(R.id.ivSolutionPicture);
         ivProblemPicture.setOnClickListener(this);
         ivSolutionPicture.setOnClickListener(this);
-        findViewById(R.id.ivSolutionPicture).setOnClickListener(this);
 
         // Views
         txtMachineInfo = findViewById(R.id.txtMachineInfo);
@@ -179,7 +177,7 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
                         Uri downloadUri = task.getResult();
 
                         Report report = new Report(machineLine, machineStation, machineID, downloadUri.toString(), etProblemDescription.getText().toString(),
-                                "Solution image is not available", "Solution description is not available", currentResponseTime);
+                                "", "", currentResponseTime);
                         mDatabaseReportRef.child(uploadID).setValue(report);
                     } else {
                         // Handle failures
@@ -203,7 +201,12 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
                                 Uri downloadUri = task.getResult();
 
                                 mDatabaseReportRef.child(uploadID).child("reportSolutionImageUrl").setValue(downloadUri.toString());
-                                mDatabaseReportRef.child(uploadID).child("reportSolutionImageDescription").setValue(etSolutionDescription.getText().toString());
+
+                                String solutionDescription = etSolutionDescription.getText().toString();
+                                if (solutionDescription.trim().equals("")) {
+                                    solutionDescription = "No Description";
+                                }
+                                mDatabaseReportRef.child(uploadID).child("reportSolutionImageDescription").setValue(solutionDescription);
 
                                 goto_MainDashboard();
                             } else {
@@ -227,12 +230,16 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.btnSave) {
-            if (mProblemUploadTask != null && mProblemUploadTask.isInProgress() && mSolutionUploadTask != null && mSolutionUploadTask.isInProgress()) {
-                Toast.makeText(this, "Uploading report is in progress...", Toast.LENGTH_SHORT).show();
+            if (ivProblemPicture.getDrawable() == null || ivSolutionPicture.getDrawable() == null) {
+                Toast.makeText(this, "Please pick an image for both problem and solution", Toast.LENGTH_SHORT).show();
             } else {
-                uploadReport();
+                if (mProblemUploadTask != null && mProblemUploadTask.isInProgress() && mSolutionUploadTask != null && mSolutionUploadTask.isInProgress()) {
+                    Toast.makeText(this, "Uploading report is in progress...", Toast.LENGTH_SHORT).show();
+                } else {
+                    uploadReport();
+                }
             }
-//            goto_MainDashboard();
+
         } else if (id == R.id.ivProblemPicture) {
             takeProblemPicture();
         } else if (id == R.id.ivSolutionPicture) {

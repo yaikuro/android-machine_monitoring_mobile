@@ -48,8 +48,7 @@ public class RecyclerView_Config_BreakdownList {
         private TextView machineLine;
         private TextView machineStation;
         private TextView machineID;
-        private TextView machineName;
-        private String key;
+        private TextView machineBreakdownTime;
         private ImageView machineStatusColor;
 
 
@@ -60,7 +59,7 @@ public class RecyclerView_Config_BreakdownList {
             machineLine = itemView.findViewById(R.id.txtMachineLine);
             machineStation = itemView.findViewById(R.id.txtMachineStation);
             machineID = itemView.findViewById(R.id.txtMachineID);
-//            machineName = itemView.findViewById(R.id.txtMachineName);
+            machineBreakdownTime = itemView.findViewById(R.id.txtMachineBreakdownTime);
             machineStatusColor = itemView.findViewById(R.id.ivStatusColor_BreakdownList);
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -75,7 +74,7 @@ public class RecyclerView_Config_BreakdownList {
                         intent.putExtra("machineLine", machineLine.getText().toString());
                         intent.putExtra("machineStation", machineStation.getText().toString());
                         intent.putExtra("machineID", machineID.getText().toString());
-//                        intent.putExtra("machineName", machineName.getText().toString());
+                        intent.putExtra("machineBreakdownTime", machineBreakdownTime.getText().toString());
                         mContext.startActivity(intent);
                     }
                 }
@@ -83,15 +82,13 @@ public class RecyclerView_Config_BreakdownList {
 
         }
 
-        public void bind(Machine machine, String key) {
+        public void bind(Machine machine) {
             machineLine.setText(machine.getMachineLine());
             machineStation.setText(machine.getMachineStation());
             machineID.setText(machine.getMachineID());
-//            machineName.setText(machine.getMachineName());
+            machineBreakdownTime.setText(machine.getMachineBreakdownTime());
             machineStatusColor.setImageResource(colorStatusList[Integer.parseInt(machine.getMachineStatus()) - 1]);
-            this.key = key;
         }
-
 
     }
 
@@ -114,7 +111,7 @@ public class RecyclerView_Config_BreakdownList {
 
         @Override
         public void onBindViewHolder(@NonNull MachineItemView holder, int position) {
-            holder.bind(mMachineList.get(position), mKeys.get(position));
+            holder.bind(mMachineList.get(position));
         }
 
         @Override

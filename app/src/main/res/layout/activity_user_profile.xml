@@ -7,14 +7,23 @@
     android:orientation="vertical"
     tools:context=".UserProfile">
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="invisible" />
+
     <ImageView
-        android:id="@+id/userProfilePicture"
+        android:id="@+id/ivUserProfilePicture"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="60dp"
-        android:layout_height="70dp"
+        android:layout_width="150dp"
+        android:layout_height="170dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:src="@drawable/google_icon_resized"
+        android:contentDescription="@string/user_profile_picture"
+        android:src="@drawable/ic_person_black_24dp"
         app:cornerRadius="70dp" />
 
     <com.google.android.material.textview.MaterialTextView
@@ -74,6 +83,14 @@
             style="@style/personalDataTextView" />
 
     </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSaveChanges"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/save_changes"
+        android:visibility="invisible" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSignOut"
