@@ -53,9 +53,9 @@ public class QRScannerActivity extends BaseActivity implements ZXingScannerView.
         txtMachineStationInformation = findViewById(R.id.txtMachineStationInformation);
         txtMachineIDInformation = findViewById(R.id.txtMachineIDInformation);
 
-        txtMachineLineInformation.setText("Line      : " + machineLine);
-        txtMachineStationInformation.setText("Station : " + machineStation);
-        txtMachineIDInformation.setText("ID : " + machineID);
+        txtMachineLineInformation.setText(machineLine);
+        txtMachineStationInformation.setText(machineStation);
+        txtMachineIDInformation.setText(machineID);
 
 
         qrCodeVerification = "Line " + machineLine + ", " + "Station " + machineStation + ", " + "ID " + machineID;

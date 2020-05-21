@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -38,17 +37,10 @@ public class ReportHistoryAdapter extends RecyclerView.Adapter<ReportHistoryAdap
     @Override
     public void onBindViewHolder(@NonNull ImagesViewHolder holder, int position) {
         Report reportCurrent = mReports.get(position);
-        holder.txtReportLine.setText("Line : " + reportCurrent.getReportMachineLine());
-        holder.txtReportStation.setText("Station : " + reportCurrent.getReportMachineStation());
-        holder.txtReportID.setText("ID : " + reportCurrent.getReportMachineID());
-        holder.txtReportUploadTime.setText("Upload Time : " + reportCurrent.getReportUploadTime());
-
-//        Picasso.get()
-//                .load(reportCurrent.getReportProblemImageUrl())
-//                .placeholder(R.mipmap.ic_launcher)
-//                .fit()
-//                .centerCrop()
-//                .into(holder.ivImageDescription);
+        holder.txtReportLine.setText(reportCurrent.getReportMachineLine());
+        holder.txtReportStation.setText(reportCurrent.getReportMachineStation());
+        holder.txtReportID.setText(reportCurrent.getReportMachineID());
+        holder.txtReportUploadTime.setText(reportCurrent.getReportUploadTime());
     }
 
     @Override
@@ -74,7 +66,6 @@ public class ReportHistoryAdapter extends RecyclerView.Adapter<ReportHistoryAdap
         public TextView txtReportStation;
         public TextView txtReportID;
         public TextView txtReportUploadTime;
-        public ImageView ivImageDescription;
 
         public ImagesViewHolder(@NonNull View itemView) {
             super(itemView);

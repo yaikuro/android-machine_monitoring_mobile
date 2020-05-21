@@ -64,7 +64,7 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
 
                 user = dataSnapshot.getValue(User.class);
 
-                txtHiUser.setText("Hi, " + user.getNickname());
+                txtHiUser.setText(getString(R.string.stringHi, user.getNickname()));
                 txtUserProfileName.setText(user.getFullName());
                 txtUserProfileEmail.setText(user.getEmail());
                 txtUserProfileMobilePhoneNumber.setText(user.getMobilePhoneNumber());

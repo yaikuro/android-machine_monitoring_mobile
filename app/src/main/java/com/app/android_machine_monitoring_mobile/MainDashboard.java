@@ -102,7 +102,7 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
                 // whenever data at this location is updated.
 
                 user = dataSnapshot.getValue(User.class);
-                txtWelcomeUser.setText("Welcome " + user.getNickname());
+                txtWelcomeUser.setText(getString(R.string.stringWelcome, user.getNickname()));
             }
 
             @Override

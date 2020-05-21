@@ -39,10 +39,10 @@ public class DetailedReportHistoryAdapter extends RecyclerView.Adapter<DetailedR
     @Override
     public void onBindViewHolder(@NonNull ImagesViewHolder holder, int position) {
         Report reportCurrent = mReports.get(position);
-        holder.txtReportLine.setText("Line : " + reportCurrent.getReportMachineLine());
-        holder.txtReportStation.setText("Station : " + reportCurrent.getReportMachineStation());
-        holder.txtReportID.setText("ID : " + reportCurrent.getReportMachineID());
-        holder.txtReportUploadTime.setText("Upload Time : " + reportCurrent.getReportUploadTime());
+        holder.txtReportLine.setText(reportCurrent.getReportMachineLine());
+        holder.txtReportStation.setText(reportCurrent.getReportMachineStation());
+        holder.txtReportID.setText(reportCurrent.getReportMachineID());
+        holder.txtReportUploadTime.setText(reportCurrent.getReportUploadTime());
         holder.txtReportProblemDescription.setText(reportCurrent.getReportProblemImageDescription());
         holder.txtReportSolutionDescription.setText(reportCurrent.getReportSolutionImageDescription());
 

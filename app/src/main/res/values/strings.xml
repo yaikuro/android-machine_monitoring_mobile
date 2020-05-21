@@ -29,10 +29,10 @@
     <string name="more_options">More Options</string>
 
 
+    <string name="stringWelcome">Welcome %s</string>
+    <string name="stringHi">Hi, %s</string>
     <string name="stringMachineInfo">Line %1$s, Station %2$s, ID %3$s</string>
 
-    // txtMachineInfo.setText("Line " + machineLine + ", " + "Station " + machineStation + ", " +
-    "ID " + machineID);
 
     <string name="machine_dashboard">Machine Dashboard</string>
     <string name="production_line">Production Line</string>
@@ -60,5 +60,12 @@
     <string name="machine_information_doubledot">Machine Information :</string>
     <string name="report_history">Report History</string>
     <string name="upload_time_doubledot">Upload Time :</string>
+    <string name="use_camera_to_scan_qr_code">Use camera to scan QR code</string>
+    <string name="doubledot">:</string>
+    <string name="line">Line</string>
+    <string name="station">Station</string>
+    <string name="upload_time">Upload Time</string>
+    <string name="problem_image">Problem Image</string>
+    <string name="solution_image">Solution Image</string>
 
 </resources>
