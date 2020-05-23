@@ -1,5 +1,6 @@
 package com.app.android_machine_monitoring_mobile;
 
+import android.app.Notification;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,8 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.app.android_machine_monitoring_mobile.shared.BaseActivity;
+import com.app.android_machine_monitoring_mobile.shared.machine.Machine;
 import com.app.android_machine_monitoring_mobile.shared.user.User;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -34,15 +38,20 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import static com.app.android_machine_monitoring_mobile.shared.Notification.CHANNEL_1_ID;
+
 public class MainDashboard extends BaseActivity implements View.OnClickListener {
     boolean doubleBackToExitPressedOnce = false;
-    private int RC_SIGN_IN = 1;
     private String TAG = "MainActivity";
+    private NotificationManagerCompat notificationManagerCompat;
+    private int RC_SIGN_IN = 1;
+
     // Firebase
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private FirebaseDatabase mDatabase;
-    private DatabaseReference mDatabaseRef;
+    private DatabaseReference mDatabaseUserRef;
+    private DatabaseReference mDatabaseMachineRef;
     private User user;
     private GoogleSignInClient mGoogleSignInclient;
 
@@ -87,13 +96,18 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
         mAuth = FirebaseAuth.getInstance();
         uid = mAuth.getUid();
         mDatabase = FirebaseDatabase.getInstance();
-        mDatabaseRef = mDatabase.getReference("Users");
+        mDatabaseUserRef = mDatabase.getReference("Users");
+        mDatabaseMachineRef = mDatabase.getReference("Machines");
         readUserFromDatabase();
+        readMachineStatusFromDatabase();
+
+
+        // Notification
+        notificationManagerCompat = NotificationManagerCompat.from(this);
 
         // Views
         txtWelcomeUser = findViewById(R.id.txtWelcomeUser);
         ivUserProfilePicture = findViewById(R.id.ivUserProfilePicture);
-
 
         // Buttons
         findViewById(R.id.cvUser).setOnClickListener(this);
@@ -106,7 +120,7 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
 
     private void readUserFromDatabase() {
         // Read from the database
-        mDatabaseRef.child(uid).addValueEventListener(new ValueEventListener() {
+        mDatabaseUserRef.child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
@@ -134,6 +148,38 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
                 container.setShimmer(null);
             }
         });
+    }
+
+    private void readMachineStatusFromDatabase() {
+        mDatabaseMachineRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot lineNode : dataSnapshot.getChildren()) {
+                    for (DataSnapshot machineNode : lineNode.getChildren()) {
+                        Machine machine = machineNode.getValue(Machine.class);
+                        assert machine != null;
+                        if (machine.getMachineStatus().equals("2")) {
+                            sendBreakdownNotification();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(MainDashboard.this, "Failed to read machine status", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void sendBreakdownNotification() {
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_1_ID)
+                .setSmallIcon(R.drawable.ic_error_outline_black_24dp)
+                .setContentTitle("Breakdown Alert!")
+                .setContentText("Breakdown on one of the machines")
+                .build();
+
+        notificationManagerCompat.notify(1, notification);
     }
 
     private void updateUI(FirebaseUser fUser) {
@@ -202,7 +248,6 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
     }
 
 
-
     // Press back twice to exit
     @Override
     public void onBackPressed() {
@@ -222,7 +267,7 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
             }
         }, 2000);
     }
-    // End of press back twice to exit
+
 
     @Override
     public void onClick(View v) {

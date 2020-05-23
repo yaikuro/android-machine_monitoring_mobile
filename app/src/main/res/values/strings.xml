@@ -70,5 +70,6 @@
     <string name="breakdown_time">Breakdown Time</string>
     <string name="user_profile_picture">User Profile Picture</string>
     <string name="save_changes">Save Changes</string>
+    <string name="no_breakdown">No breakdown</string>
 
 </resources>

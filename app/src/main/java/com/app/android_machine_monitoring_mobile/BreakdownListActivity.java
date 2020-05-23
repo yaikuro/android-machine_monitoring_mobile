@@ -2,6 +2,7 @@ package com.app.android_machine_monitoring_mobile;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,6 +16,7 @@ import java.util.List;
 public class BreakdownListActivity extends BaseActivity {
 
     private RecyclerView rvBreakdownList;
+    private TextView txtNoBreakdown;
 
 
     @Override
@@ -23,6 +25,7 @@ public class BreakdownListActivity extends BaseActivity {
         setContentView(R.layout.activity_breakdown_list);
 
         rvBreakdownList = findViewById(R.id.rvBreakdownList);
+        txtNoBreakdown = findViewById(R.id.txtNoBreakdown);
         setRvBreakdownList();
 
     }
@@ -33,6 +36,12 @@ public class BreakdownListActivity extends BaseActivity {
             public void DataIsLoaded(List<Machine> machineList, List<String> keys) {
                 findViewById(R.id.progressBar).setVisibility(View.GONE);
                 new RecyclerView_Config_BreakdownList().setBreakdownListConfig(rvBreakdownList, BreakdownListActivity.this, machineList, keys);
+
+                if (machineList.size() < 1) {
+                    txtNoBreakdown.setText(R.string.no_breakdown);
+                } else {
+                    txtNoBreakdown.setText("");
+                }
             }
 
             @Override

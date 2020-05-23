@@ -33,6 +33,7 @@ public class GetMachineData {
                     for (DataSnapshot machineNode : lineNode.getChildren()) {
                         machines.add(machineNode.getKey());
                         Machine machine = machineNode.getValue(Machine.class);
+                        assert machine != null;
                         if (machine.getMachineStatus().equals("2")) {
 
 //                             Should be removed after testing
