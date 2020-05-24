@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.android_machine_monitoring_mobile.R;
-import com.app.android_machine_monitoring_mobile.UserProfile;
+import com.app.android_machine_monitoring_mobile.ReportHistoryActivity;
 
 import java.util.List;
 
@@ -62,7 +62,7 @@ public class RecyclerView_Config_MachineDashboard {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(mContext, UserProfile.class);
+                    Intent intent = new Intent(mContext, ReportHistoryActivity.class);
                     Toast.makeText(mContext, machineName.getText().toString(), Toast.LENGTH_SHORT).show();
                     mContext.startActivity(intent);
                 }

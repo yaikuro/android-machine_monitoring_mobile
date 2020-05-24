@@ -26,47 +26,38 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtStringReportLine"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
                     android:text="@string/line"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    style="@style/reportTextView" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtStringReportStation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
                     android:text="@string/station"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    style="@style/reportTextView" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtStringReportID"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
                     android:text="@string/id"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    style="@style/reportTextView" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtStringReportResponseTime"
+                    style="@style/reportTextView"
+                    android:text="@string/reponse_time" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtStringReportUploadTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
                     android:text="@string/upload_time"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    style="@style/reportTextView" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtStringReportRepairDuration"
+                    style="@style/reportTextView"
+                    android:text="@string/repair_duration" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtStringReportPIC"
+                    style="@style/reportTextView"
+                    android:text="@string/pic" />
 
             </LinearLayout>
 
@@ -79,47 +70,31 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/doubledot1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="@string/doubledot"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    style="@style/reportDoubleDot" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/doubledot2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="@string/doubledot"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    style="@style/reportDoubleDot" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/doubledot3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="@string/doubledot"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    style="@style/reportDoubleDot" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/doubledot4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="@string/doubledot"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    style="@style/reportDoubleDot" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/doubledot5"
+                    style="@style/reportDoubleDot" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/doubledot6"
+                    style="@style/reportDoubleDot" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/doubledot7"
+                    style="@style/reportDoubleDot" />
 
             </LinearLayout>
 
@@ -130,39 +105,31 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtReportLine"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:textColor="@color/black"
-                    android:textSize="20sp" />
+                    style="@style/reportTextView" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtReportStation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:textColor="@color/black"
-                    android:textSize="20sp" />
+                    style="@style/reportTextView" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtReportID"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:textColor="@color/black"
-                    android:textSize="20sp" />
+                    style="@style/reportTextView" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtReportResponseTime"
+                    style="@style/reportTextView" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtReportUploadTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:textColor="@color/black"
-                    android:textSize="20sp" />
+                    style="@style/reportTextView" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtReportRepairDuration"
+                    style="@style/reportTextView" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtReportPIC"
+                    style="@style/reportTextView" />
 
             </LinearLayout>
 

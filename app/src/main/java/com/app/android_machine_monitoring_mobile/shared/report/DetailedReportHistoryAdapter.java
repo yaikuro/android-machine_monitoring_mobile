@@ -39,23 +39,26 @@ public class DetailedReportHistoryAdapter extends RecyclerView.Adapter<DetailedR
     @Override
     public void onBindViewHolder(@NonNull ImagesViewHolder holder, int position) {
         Report reportCurrent = mReports.get(position);
+        holder.txtReportPIC.setText(reportCurrent.getReportPIC());
         holder.txtReportLine.setText(reportCurrent.getReportMachineLine());
         holder.txtReportStation.setText(reportCurrent.getReportMachineStation());
         holder.txtReportID.setText(reportCurrent.getReportMachineID());
+        holder.txtReportResponseTime.setText(reportCurrent.getReportResponseTime());
         holder.txtReportUploadTime.setText(reportCurrent.getReportUploadTime());
+        holder.txtReportRepairDuration.setText(reportCurrent.getReportRepairDuration());
         holder.txtReportProblemDescription.setText(reportCurrent.getReportProblemImageDescription());
         holder.txtReportSolutionDescription.setText(reportCurrent.getReportSolutionImageDescription());
 
         Picasso.get()
                 .load(reportCurrent.getReportProblemImageUrl())
-                .placeholder(R.mipmap.ic_launcher)
+                .placeholder(R.drawable.ic_image_black_24dp)
                 .fit()
                 .centerCrop()
                 .into(holder.ivReportProblemImage);
 
         Picasso.get()
                 .load(reportCurrent.getReportSolutionImageUrl())
-                .placeholder(R.mipmap.ic_launcher)
+                .placeholder(R.drawable.ic_image_black_24dp)
                 .fit()
                 .centerCrop()
                 .into(holder.ivReportSolutionImage);
@@ -81,23 +84,28 @@ public class DetailedReportHistoryAdapter extends RecyclerView.Adapter<DetailedR
     public class ImagesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
             View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
 
+        public TextView txtReportPIC;
         public TextView txtReportLine;
         public TextView txtReportStation;
         public TextView txtReportID;
+        public TextView txtReportResponseTime;
         public TextView txtReportUploadTime;
+        public TextView txtReportRepairDuration;
         public TextView txtReportProblemDescription;
         public TextView txtReportSolutionDescription;
-
         public ImageView ivReportProblemImage;
         public ImageView ivReportSolutionImage;
 
         public ImagesViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            txtReportPIC = itemView.findViewById(R.id.txtReportPIC);
             txtReportLine = itemView.findViewById(R.id.txtReportLine);
             txtReportStation = itemView.findViewById(R.id.txtReportStation);
             txtReportID = itemView.findViewById(R.id.txtReportID);
+            txtReportResponseTime = itemView.findViewById(R.id.txtReportResponseTime);
             txtReportUploadTime = itemView.findViewById(R.id.txtReportUploadTime);
+            txtReportRepairDuration = itemView.findViewById(R.id.txtReportRepairDuration);
             txtReportProblemDescription = itemView.findViewById(R.id.txtReportProblemDescription);
             txtReportSolutionDescription = itemView.findViewById(R.id.txtReportSolutionDescription);
             ivReportProblemImage = itemView.findViewById(R.id.ivReportProblemImage);

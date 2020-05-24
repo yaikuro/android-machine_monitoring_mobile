@@ -8,6 +8,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.android_machine_monitoring_mobile.shared.BaseActivity;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,11 +31,19 @@ public class QRScannerActivity extends BaseActivity implements ZXingScannerView.
     private TextView txtMachineStationInformation;
     private TextView txtMachineIDInformation;
 
+    // Firebase
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mDatabaseMachineRef;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_scanner);
+
+        // Firebase
+        mDatabase = FirebaseDatabase.getInstance();
+        mDatabaseMachineRef = mDatabase.getReference("Machines");
 
         // Get machine's information
         machineLine = getIntent().getStringExtra("machineLine");
@@ -93,6 +103,10 @@ public class QRScannerActivity extends BaseActivity implements ZXingScannerView.
 
     private void goto_RepairBreakdownActivity() {
         String currentResponseTime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault()).format(new Date());
+
+        // Set selected breakdown machine status to "Repairing"
+        mDatabaseMachineRef.child("Line " + machineLine).child(machineID).child("machineStatus").setValue("3");
+
         Intent i = new Intent(this, RepairBreakdownActivity.class);
         i.putExtra("machineLine", machineLine);
         i.putExtra("machineStation", machineStation);

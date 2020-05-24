@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/relativeLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/md_blue_grey_100"
+    android:orientation="vertical"
     tools:context=".MainDashboard">
 
     <com.facebook.shimmer.ShimmerFrameLayout
@@ -91,9 +91,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/shimmer_view_container">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/machinedashboardIcon"
@@ -101,11 +102,7 @@
                 android:layout_height="65dp"
                 android:layout_marginTop="8dp"
                 android:contentDescription="@string/machine_dashboard"
-                android:src="@drawable/machine_icon1"
-                app:layout_constraintBottom_toTopOf="@id/machinedashboardInfo"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:src="@drawable/machine_icon1" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/machinedashboardInfo"
@@ -116,180 +113,195 @@
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/machinedashboardIcon" />
+                android:textStyle="bold" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cvBreakdownList"
-        style="@style/Widget.MaterialComponents.CardView"
-        android:layout_width="@dimen/card_view_width_hp"
-        android:layout_height="@dimen/card_view_height_hp"
-        android:layout_marginLeft="@dimen/material_card_spacing"
-        android:layout_marginTop="@dimen/material_card_spacing"
-        android:layout_marginRight="@dimen/material_card_spacing"
-        android:clickable="true"
-        android:minHeight="50dp"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="6dp"
-        app:layout_constraintEnd_toStartOf="@id/cvReportHistory"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cvMachineDashboard">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvBreakdownList"
+            style="@style/Widget.MaterialComponents.CardView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_height="@dimen/card_view_height_hp"
+            android:layout_marginLeft="@dimen/material_card_spacing"
+            android:layout_marginTop="@dimen/material_card_spacing"
+            android:layout_marginRight="@dimen/material_card_spacing"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:minHeight="50dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="6dp"
+            app:layout_constraintEnd_toStartOf="@id/cvReportHistory"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cvMachineDashboard">
 
-            <ImageView
-                android:layout_width="@dimen/card_view_image_width_hp"
-                android:layout_height="@dimen/card_view_image_height_hp"
-                android:src="@drawable/machine_icon2" />
 
-            <com.google.android.material.textview.MaterialTextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="@string/breakdown_list"
-                android:textColor="@color/black"
-                android:textSize="@dimen/card_view_text_hp"
-                android:textStyle="bold" />
+                android:orientation="vertical"
+                android:padding="16dp">
 
-        </LinearLayout>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/card_view_image_height_hp"
+                    android:src="@drawable/machine_icon2" />
 
-    </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/breakdown_list"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/card_view_text_hp"
+                    android:textStyle="bold" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cvReportHistory"
-        style="@style/Widget.MaterialComponents.CardView"
-        android:layout_width="@dimen/card_view_width_hp"
-        android:layout_height="@dimen/card_view_height_hp"
-        android:layout_marginLeft="@dimen/material_card_spacing"
-        android:layout_marginTop="@dimen/material_card_spacing"
-        android:layout_marginRight="@dimen/material_card_spacing"
-        android:clickable="true"
-        android:minHeight="50dp"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="6dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/cvBreakdownList"
-        app:layout_constraintTop_toBottomOf="@id/cvMachineDashboard">
+            </LinearLayout>
 
-        <LinearLayout
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvReportHistory"
+            style="@style/Widget.MaterialComponents.CardView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_height="@dimen/card_view_height_hp"
+            android:layout_marginLeft="@dimen/material_card_spacing"
+            android:layout_marginTop="@dimen/material_card_spacing"
+            android:layout_marginRight="@dimen/material_card_spacing"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:minHeight="50dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="6dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/cvBreakdownList"
+            app:layout_constraintTop_toBottomOf="@id/cvMachineDashboard">
 
-            <ImageView
-                android:layout_width="@dimen/card_view_image_width_hp"
-                android:layout_height="@dimen/card_view_image_height_hp"
-                android:src="@drawable/machine_icon3" />
-
-            <com.google.android.material.textview.MaterialTextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="@string/report_history"
-                android:textColor="@color/black"
-                android:textSize="@dimen/card_view_text_hp"
-                android:textStyle="bold" />
+                android:orientation="vertical"
+                android:padding="16dp">
 
-        </LinearLayout>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/card_view_image_height_hp"
+                    android:src="@drawable/machine_icon3" />
 
-    </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/report_history"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/card_view_text_hp"
+                    android:textStyle="bold" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardView_comingsoon1"
-        style="@style/Widget.MaterialComponents.CardView"
-        android:layout_width="@dimen/card_view_width_hp"
-        android:layout_height="@dimen/card_view_height_hp"
-        android:layout_marginLeft="@dimen/material_card_spacing"
-        android:layout_marginTop="@dimen/material_card_spacing"
-        android:layout_marginRight="@dimen/material_card_spacing"
-        android:clickable="true"
-        android:minHeight="50dp"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="6dp"
-        app:layout_constraintEnd_toStartOf="@+id/cardView_comingsoon2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cvBreakdownList">
+            </LinearLayout>
 
-        <LinearLayout
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardView_comingsoon1"
+            style="@style/Widget.MaterialComponents.CardView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_height="@dimen/card_view_height_hp"
+            android:layout_marginLeft="@dimen/material_card_spacing"
+            android:layout_marginTop="@dimen/material_card_spacing"
+            android:layout_marginRight="@dimen/material_card_spacing"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:minHeight="50dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="6dp"
+            app:layout_constraintEnd_toStartOf="@+id/cardView_comingsoon2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cvBreakdownList">
 
-            <!--            <ImageView-->
-            <!--                android:layout_width="@dimen/card_view_image_width_hp"-->
-            <!--                android:layout_height="@dimen/card_view_image_height_hp"-->
-            <!--                android:src="@drawable/machine_icon3" />-->
-
-            <com.google.android.material.textview.MaterialTextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/coming_soon"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="@dimen/card_view_text_hp"
-                android:textStyle="bold" />
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-        </LinearLayout>
+                <!--            <ImageView-->
+                <!--                android:layout_width="@dimen/card_view_image_width_hp"-->
+                <!--                android:layout_height="@dimen/card_view_image_height_hp"-->
+                <!--                android:src="@drawable/machine_icon3" />-->
 
-    </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/coming_soon"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/card_view_text_hp"
+                    android:textStyle="bold" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardView_comingsoon2"
-        style="@style/Widget.MaterialComponents.CardView"
-        android:layout_width="@dimen/card_view_width_hp"
-        android:layout_height="@dimen/card_view_height_hp"
-        android:layout_marginLeft="@dimen/material_card_spacing"
-        android:layout_marginTop="@dimen/material_card_spacing"
-        android:layout_marginRight="@dimen/material_card_spacing"
-        android:clickable="true"
-        android:minHeight="50dp"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="6dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cardView_comingsoon1"
-        app:layout_constraintTop_toBottomOf="@id/cvReportHistory">
+            </LinearLayout>
 
-        <LinearLayout
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardView_comingsoon2"
+            style="@style/Widget.MaterialComponents.CardView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_height="@dimen/card_view_height_hp"
+            android:layout_marginLeft="@dimen/material_card_spacing"
+            android:layout_marginTop="@dimen/material_card_spacing"
+            android:layout_marginRight="@dimen/material_card_spacing"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:minHeight="50dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="6dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cardView_comingsoon1"
+            app:layout_constraintTop_toBottomOf="@id/cvReportHistory">
 
-            <!--            <ImageView-->
-            <!--                android:layout_width="@dimen/card_view_image_width_hp"-->
-            <!--                android:layout_height="@dimen/card_view_image_height_hp"-->
-            <!--                android:src="@drawable/machine_icon3" />-->
-
-            <com.google.android.material.textview.MaterialTextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/coming_soon"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="@dimen/card_view_text_hp"
-                android:textStyle="bold" />
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-        </LinearLayout>
+                <!--            <ImageView-->
+                <!--                android:layout_width="@dimen/card_view_image_width_hp"-->
+                <!--                android:layout_height="@dimen/card_view_image_height_hp"-->
+                <!--                android:src="@drawable/machine_icon3" />-->
 
-    </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/coming_soon"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/card_view_text_hp"
+                    android:textStyle="bold" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -4,9 +4,11 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,6 +35,11 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Objects;
+
 public class RepairBreakdownActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = "RepairBreakdownActivity";
     private static final int PICK_PROBLEM_IMAGE = 100;
@@ -42,12 +49,15 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mDatabaseUserRef;
+    private DatabaseReference mDatabaseMachineRef;
     private DatabaseReference mDatabaseReportRef;
     private StorageReference mStorageRef;
     private StorageTask<UploadTask.TaskSnapshot> mProblemUploadTask;
     private StorageTask<UploadTask.TaskSnapshot> mSolutionUploadTask;
     private User user;
 
+    private boolean running;
+    private Chronometer chronometer;
     private Uri mProblemImageUri;
     private Uri mSolutionImageUri;
     private String uid;
@@ -74,6 +84,7 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
         uid = mAuth.getUid();
         mDatabase = FirebaseDatabase.getInstance();
         mDatabaseUserRef = mDatabase.getReference("Users");
+        mDatabaseMachineRef = mDatabase.getReference("Machines");
         mDatabaseReportRef = mDatabase.getReference("Reports");
         mStorageRef = FirebaseStorage.getInstance().getReference("Reports");
         readUserFromDatabase();
@@ -98,6 +109,10 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
         machineID = getIntent().getStringExtra("machineID");
         currentResponseTime = getIntent().getStringExtra("currentResponseTime");
 
+        // Start stopwatch
+        chronometer = findViewById(R.id.chronometer);
+        startChronometer();
+
 
         txtMachineInfo.setText(getString(R.string.stringMachineInfo, machineLine, machineStation, machineID));
         txtCurrentTimeResponse.setText(currentResponseTime);
@@ -114,11 +129,12 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
                 // whenever data at this location is updated.
 
                 user = dataSnapshot.getValue(User.class);
+                assert user != null;
                 pic.setText(user.getFullName());
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
+            public void onCancelled(@NonNull DatabaseError error) {
                 // Failed to read value
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
@@ -147,7 +163,11 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
     }
 
     private void uploadReport() {
+        chronometer.stop();
+        final String repairDuration = chronometer.getText().toString();
         final String uploadID = mDatabaseReportRef.push().getKey();
+        final String currentUploadTime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault()).format(new Date());
+
 
         if (mProblemImageUri != null && mSolutionImageUri != null) {
 
@@ -164,7 +184,7 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
                 @Override
                 public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                     if (!task.isSuccessful()) {
-                        throw task.getException();
+                        throw Objects.requireNonNull(task.getException());
                     }
 
                     // Continue with the task to get the download URL
@@ -176,8 +196,10 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
                     if (task.isSuccessful()) {
                         Uri downloadUri = task.getResult();
 
-                        Report report = new Report(machineLine, machineStation, machineID, downloadUri.toString(), etProblemDescription.getText().toString(),
-                                "", "", currentResponseTime);
+                        assert downloadUri != null;
+                        Report report = new Report(user.getFullName(), machineLine, machineStation, machineID, downloadUri.toString(), etProblemDescription.getText().toString(),
+                                "", "", currentResponseTime, currentUploadTime, repairDuration);
+                        assert uploadID != null;
                         mDatabaseReportRef.child(uploadID).setValue(report);
                     } else {
                         // Handle failures
@@ -188,7 +210,7 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
                         @Override
                         public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                             if (!task.isSuccessful()) {
-                                throw task.getException();
+                                throw Objects.requireNonNull(task.getException());
                             }
 
                             // Continue with the task to get the download URL
@@ -200,14 +222,19 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
                             if (task.isSuccessful()) {
                                 Uri downloadUri = task.getResult();
 
-                                mDatabaseReportRef.child(uploadID).child("reportSolutionImageUrl").setValue(downloadUri.toString());
-
                                 String solutionDescription = etSolutionDescription.getText().toString();
                                 if (solutionDescription.trim().equals("")) {
                                     solutionDescription = "No Description";
                                 }
+
+                                assert uploadID != null;
+                                assert downloadUri != null;
+
+                                mDatabaseReportRef.child(uploadID).child("reportSolutionImageUrl").setValue(downloadUri.toString());
                                 mDatabaseReportRef.child(uploadID).child("reportSolutionImageDescription").setValue(solutionDescription);
 
+                                // Set machine status to "Confirming"
+                                mDatabaseMachineRef.child("Line " + machineLine).child(machineID).child("machineStatus").setValue("4");
                                 goto_MainDashboard();
                             } else {
                                 // Handle failures
@@ -223,6 +250,15 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
 
         } else {
             Toast.makeText(this, "Error. No image taken", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void startChronometer() {
+        if (!running) {
+            running = true;
+            chronometer.setFormat("%s");
+            chronometer.setBase(SystemClock.elapsedRealtime());
+            chronometer.start();
         }
     }
 

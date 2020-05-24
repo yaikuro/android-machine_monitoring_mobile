@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReportHistoryActivity extends BaseActivity implements ReportHistoryAdapter.OnItemClickListener {
-    private RecyclerView mRecyclerView;
     private ReportHistoryAdapter mAdapter;
 
     private ProgressBar mProgressCircle;
@@ -38,7 +37,7 @@ public class ReportHistoryActivity extends BaseActivity implements ReportHistory
 
         mProgressCircle = findViewById(R.id.progress_circle);
 
-        mRecyclerView = findViewById(R.id.rvImages);
+        RecyclerView mRecyclerView = findViewById(R.id.rvImages);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -61,6 +60,7 @@ public class ReportHistoryActivity extends BaseActivity implements ReportHistory
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Report report = postSnapshot.getValue(Report.class);
+                    assert report != null;
                     report.setKey(postSnapshot.getKey());
                     mReports.add(report);
                 }

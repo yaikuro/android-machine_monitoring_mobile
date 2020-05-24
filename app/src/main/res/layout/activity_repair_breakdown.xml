@@ -10,7 +10,8 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/collapsingAppBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="420dp">
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
 
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -21,19 +22,8 @@
             app:expandedTitleGravity="top|center"
             app:expandedTitleMarginStart="48dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:title="Breakdown Detail">
+            app:title="Breakdown Details">
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="36dp"
-                android:indeterminate="true"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="?attr/actionBarSize" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -158,25 +148,32 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:fillViewport="true">
-
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginRight="5dp">
 
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:indeterminate="true"
+                android:visibility="invisible" />
 
             <ImageView
                 android:id="@+id/ivProblemPicture"
                 android:layout_width="match_parent"
                 android:layout_height="200sp"
-                android:layout_marginTop="450dp"
+                android:layout_below="@+id/progressBar"
                 android:layout_marginBottom="10dp"
                 android:contentDescription="@string/problem_description" />
 
