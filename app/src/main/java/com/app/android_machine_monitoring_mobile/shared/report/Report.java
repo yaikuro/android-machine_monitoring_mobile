@@ -22,7 +22,7 @@ public class Report {
     }
 
     public Report(String reportPIC, String reportMachineLine, String reportMachineStation, String reportMachineID, String reportImageUrl, String reportProblemImageDescription,
-                  String reportSolutionImageUrl, String reportSolutionImageDescription, String reportResponseTime, String reportUploadTime, String reportRepairDuration) {
+                  String reportResponseTime, String reportUploadTime, String reportRepairDuration) {
 
         if (reportProblemImageDescription.trim().equals("")) {
             reportProblemImageDescription = "No description";
@@ -34,8 +34,8 @@ public class Report {
         this.reportMachineID = reportMachineID;
         this.reportProblemImageUrl = reportImageUrl;
         this.reportProblemImageDescription = reportProblemImageDescription;
-        this.reportSolutionImageUrl = reportSolutionImageUrl;
-        this.reportSolutionImageDescription = reportSolutionImageDescription;
+//        this.reportSolutionImageUrl = reportSolutionImageUrl;
+//        this.reportSolutionImageDescription = reportSolutionImageDescription;
         this.reportResponseTime = reportResponseTime;
         this.reportUploadTime = reportUploadTime;
         this.reportRepairDuration = reportRepairDuration;

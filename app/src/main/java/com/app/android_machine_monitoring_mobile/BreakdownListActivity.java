@@ -1,9 +1,15 @@
 package com.app.android_machine_monitoring_mobile;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.android_machine_monitoring_mobile.shared.BaseActivity;
@@ -15,6 +21,7 @@ import java.util.List;
 
 public class BreakdownListActivity extends BaseActivity {
 
+    private static final int CAMERA_PERM_CODE = 1;
     private RecyclerView rvBreakdownList;
     private TextView txtNoBreakdown;
 
@@ -26,7 +33,7 @@ public class BreakdownListActivity extends BaseActivity {
 
         rvBreakdownList = findViewById(R.id.rvBreakdownList);
         txtNoBreakdown = findViewById(R.id.txtNoBreakdown);
-        setRvBreakdownList();
+        askCameraPermissions();
 
     }
 
@@ -59,6 +66,26 @@ public class BreakdownListActivity extends BaseActivity {
 
             }
         });
+    }
+
+    private void askCameraPermissions() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERM_CODE);
+        } else {
+            setRvBreakdownList();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == CAMERA_PERM_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                setRvBreakdownList();
+            } else {
+                txtNoBreakdown.setText(R.string.please_enable_camera_permission);
+                Toast.makeText(this, "Camera permission is required to enable this feature", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
 

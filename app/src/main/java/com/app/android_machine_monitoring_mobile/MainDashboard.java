@@ -128,6 +128,7 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
 
                 user = dataSnapshot.getValue(User.class);
 
+                assert user != null;
                 txtWelcomeUser.setText(getString(R.string.stringWelcome, user.getNickname()));
 
                 Picasso.get()
@@ -141,7 +142,7 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
+            public void onCancelled(@NonNull DatabaseError error) {
                 // Failed to read value
                 Log.w(TAG, "Failed to read value.", error.toException());
                 container.stopShimmer();

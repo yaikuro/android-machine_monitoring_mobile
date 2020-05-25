@@ -178,6 +178,22 @@
                 android:src="@drawable/ic_image_black_24dp"
                 android:contentDescription="@string/problem_description" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnTakeProblemImageWithCamera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/ivProblemPicture"
+                android:layout_alignBottom="@id/ivProblemPicture"
+                android:text="@string/camera" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnTakeProblemImageFromGallery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@id/ivProblemPicture"
+                android:layout_alignBottom="@id/ivProblemPicture"
+                android:text="@string/gallery" />
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/ProblemDescription"
@@ -199,7 +215,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textShortMessage"
-                    android:textColor="#000000"
+                    android:textColor="@color/black"
                     android:textSize="20sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -213,6 +229,22 @@
                 android:layout_marginBottom="10dp"
                 android:src="@drawable/ic_image_black_24dp"
                 android:contentDescription="@string/solution_picture" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnTakeSolutionImageWithCamera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/ivSolutionPicture"
+                android:layout_alignBottom="@id/ivSolutionPicture"
+                android:text="@string/camera" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnTakeSolutionImageFromGallery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@id/ivSolutionPicture"
+                android:layout_alignBottom="@id/ivSolutionPicture"
+                android:text="@string/gallery" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/SolutionDescription"
@@ -234,7 +266,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textShortMessage"
-                    android:textColor="#000000"
+                    android:textColor="@color/black"
                     android:textSize="20sp" />
 
             </com.google.android.material.textfield.TextInputLayout>

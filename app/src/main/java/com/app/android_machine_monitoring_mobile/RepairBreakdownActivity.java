@@ -2,7 +2,6 @@ package com.app.android_machine_monitoring_mobile;
 
 import android.content.ContentResolver;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -73,6 +72,7 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
     private String machineStation;
     private String machineID;
     private String currentResponseTime;
+    private String currentPhotoPath;
     private TextView txtMachineInfo;
     private TextView pic;
     private TextView txtCurrentTimeResponse;
@@ -99,10 +99,12 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
 
         // Buttons
         findViewById(R.id.btnSave).setOnClickListener(this);
+        findViewById(R.id.btnTakeProblemImageWithCamera).setOnClickListener(this);
+        findViewById(R.id.btnTakeProblemImageFromGallery).setOnClickListener(this);
+        findViewById(R.id.btnTakeSolutionImageWithCamera).setOnClickListener(this);
+        findViewById(R.id.btnTakeSolutionImageFromGallery).setOnClickListener(this);
         ivProblemPicture = findViewById(R.id.ivProblemPicture);
         ivSolutionPicture = findViewById(R.id.ivSolutionPicture);
-        ivProblemPicture.setOnClickListener(this);
-        ivSolutionPicture.setOnClickListener(this);
 
         // Views
         txtMachineInfo = findViewById(R.id.txtMachineInfo);
@@ -126,98 +128,6 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
         txtCurrentTimeResponse.setText(currentResponseTime);
 
 
-    }
-
-    private void readUserFromDatabase() {
-        // Read from the database
-        mDatabaseUserRef.child(uid).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-
-                user = dataSnapshot.getValue(User.class);
-                assert user != null;
-                pic.setText(user.getFullName());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
-    }
-
-    private void takeProblemImageWithCamera() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-                // Error occurred while creating the File
-                Toast.makeText(this, "Error while creating the file", Toast.LENGTH_SHORT).show();
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                Toast.makeText(this, photoFile.toString(), Toast.LENGTH_SHORT).show();
-                mProblemImageUri = FileProvider.getUriForFile(this,
-                        "com.app.android_machine_monitoring_mobile",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mProblemImageUri);
-                startActivityForResult(takePictureIntent, REQUEST_CAPTURE_PROBLEM_IMAGE);
-            }
-        }
-    }
-
-    private void takeSolutionImageWithCamera() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_CAPTURE_SOLUTION_IMAGE);
-        }
-    }
-
-
-    private File createImageFile() throws IOException {
-        String currentPhotoPath;
-
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        currentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
-
-    private void pickProblemPictureFromGallery() {
-        Intent i = new Intent();
-        i.setType("image/*");
-        i.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(i, PICK_PROBLEM_IMAGE);
-    }
-
-    private void pickSolutionPictureFromGallery() {
-        Intent i = new Intent();
-        i.setType("image/*");
-        i.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(i, PICK_SOLUTION_IMAGE);
-    }
-
-    // Get the file extension and then change it to .jpg
-    private String getFileExtension(Uri uri) {
-        ContentResolver contentResolver = getContentResolver();
-        MimeTypeMap mime = MimeTypeMap.getSingleton();
-        return mime.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
     private void uploadReport() {
@@ -255,7 +165,7 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
 
                         assert downloadUri != null;
                         Report report = new Report(user.getFullName(), machineLine, machineStation, machineID, downloadUri.toString(), etProblemDescription.getText().toString(),
-                                "", "", currentResponseTime, currentUploadTime, repairDuration);
+                                currentResponseTime, currentUploadTime, repairDuration);
                         assert uploadID != null;
                         mDatabaseReportRef.child(uploadID).setValue(report);
                     } else {
@@ -310,6 +220,110 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
         }
     }
 
+    private void readUserFromDatabase() {
+        // Read from the database
+        mDatabaseUserRef.child(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+
+                user = dataSnapshot.getValue(User.class);
+                assert user != null;
+                pic.setText(user.getFullName());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+    }
+
+    private void takeProblemImageWithCamera() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                Log.e(TAG, "takeProblemImageWithCamera: ", ex);
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        "com.app.android_machine_monitoring_mobile",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_CAPTURE_PROBLEM_IMAGE);
+            }
+        }
+    }
+
+    private void takeSolutionImageWithCamera() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                Log.e(TAG, "takeSolutionImageWithCamera: ", ex);
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        "com.app.android_machine_monitoring_mobile",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_CAPTURE_SOLUTION_IMAGE);
+            }
+        }
+    }
+
+    private File createImageFile() throws IOException {
+
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    private void pickProblemPictureFromGallery() {
+        Intent i = new Intent();
+        i.setType("image/*");
+        i.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(i, PICK_PROBLEM_IMAGE);
+    }
+
+    private void pickSolutionPictureFromGallery() {
+        Intent i = new Intent();
+        i.setType("image/*");
+        i.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(i, PICK_SOLUTION_IMAGE);
+    }
+
+    // Get the file extension and then change it to .jpg
+    private String getFileExtension(Uri uri) {
+        ContentResolver contentResolver = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(contentResolver.getType(uri));
+    }
+
+
     public void startChronometer() {
         if (!running) {
             running = true;
@@ -333,10 +347,15 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
                 }
             }
 
-        } else if (id == R.id.ivProblemPicture) {
+        } else if (id == R.id.btnTakeProblemImageWithCamera) {
+            takeProblemImageWithCamera();
+        } else if (id == R.id.btnTakeProblemImageFromGallery) {
             pickProblemPictureFromGallery();
-        } else if (id == R.id.ivSolutionPicture) {
+        } else if (id == R.id.btnTakeSolutionImageWithCamera) {
+            takeSolutionImageWithCamera();
+        } else if (id == R.id.btnTakeSolutionImageFromGallery) {
             pickSolutionPictureFromGallery();
+
         }
     }
 
@@ -344,21 +363,19 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == REQUEST_CAPTURE_PROBLEM_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            mProblemImageUri = data.getData();
+        if (requestCode == REQUEST_CAPTURE_PROBLEM_IMAGE && resultCode == RESULT_OK) {
 
-            Picasso.get()
-                    .load(mProblemImageUri)
-                    .into(ivProblemPicture);
+            File f = new File(currentPhotoPath);
+            mProblemImageUri = Uri.fromFile(f);
 
-            //            Bundle extras = data.getExtras();
-//            Bitmap imageBitmap = (Bitmap) extras.get("data");
-//            ivProblemPicture.setImageBitmap(imageBitmap);
+            ivProblemPicture.setImageURI(mProblemImageUri);
 
-        } else if (requestCode == REQUEST_CAPTURE_SOLUTION_IMAGE && resultCode == RESULT_OK && data != null && data.getExtras() != null) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            ivSolutionPicture.setImageBitmap(imageBitmap);
+        } else if (requestCode == REQUEST_CAPTURE_SOLUTION_IMAGE && resultCode == RESULT_OK) {
+
+            File f = new File(currentPhotoPath);
+            mSolutionImageUri = Uri.fromFile(f);
+
+            ivSolutionPicture.setImageURI(mSolutionImageUri);
 
         } else if (requestCode == PICK_PROBLEM_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             mProblemImageUri = data.getData();

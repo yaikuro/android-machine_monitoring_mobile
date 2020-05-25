@@ -1,10 +1,7 @@
 package com.app.android_machine_monitoring_mobile.shared.machine;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -65,18 +60,12 @@ public class RecyclerView_Config_BreakdownList {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.CAMERA)
-                            != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions((Activity) mContext,
-                                new String[]{Manifest.permission.CAMERA}, ZBAR_CAMERA_PERMISSION);
-                    } else {
-                        Intent intent = new Intent(mContext, QRScannerActivity.class);
-                        intent.putExtra("machineLine", machineLine.getText().toString());
-                        intent.putExtra("machineStation", machineStation.getText().toString());
-                        intent.putExtra("machineID", machineID.getText().toString());
-                        intent.putExtra("machineBreakdownTime", machineBreakdownTime.getText().toString());
-                        mContext.startActivity(intent);
-                    }
+                    Intent intent = new Intent(mContext, QRScannerActivity.class);
+                    intent.putExtra("machineLine", machineLine.getText().toString());
+                    intent.putExtra("machineStation", machineStation.getText().toString());
+                    intent.putExtra("machineID", machineID.getText().toString());
+                    intent.putExtra("machineBreakdownTime", machineBreakdownTime.getText().toString());
+                    mContext.startActivity(intent);
                 }
             });
 
