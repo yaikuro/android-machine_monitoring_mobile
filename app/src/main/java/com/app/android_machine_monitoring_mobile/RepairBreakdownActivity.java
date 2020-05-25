@@ -2,9 +2,12 @@ package com.app.android_machine_monitoring_mobile;
 
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.SystemClock;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -16,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 
 import com.app.android_machine_monitoring_mobile.shared.BaseActivity;
 import com.app.android_machine_monitoring_mobile.shared.report.Report;
@@ -35,6 +39,8 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -42,8 +48,10 @@ import java.util.Objects;
 
 public class RepairBreakdownActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = "RepairBreakdownActivity";
-    private static final int PICK_PROBLEM_IMAGE = 100;
-    private static final int PICK_SOLUTION_IMAGE = 200;
+    private static final int REQUEST_CAPTURE_PROBLEM_IMAGE = 100;
+    private static final int REQUEST_CAPTURE_SOLUTION_IMAGE = 200;
+    private static final int PICK_PROBLEM_IMAGE = 300;
+    private static final int PICK_SOLUTION_IMAGE = 400;
 
     // Firebase
     private FirebaseAuth mAuth;
@@ -141,14 +149,64 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
         });
     }
 
-    private void takeProblemPicture() {
+    private void takeProblemImageWithCamera() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+                Toast.makeText(this, "Error while creating the file", Toast.LENGTH_SHORT).show();
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Toast.makeText(this, photoFile.toString(), Toast.LENGTH_SHORT).show();
+                mProblemImageUri = FileProvider.getUriForFile(this,
+                        "com.app.android_machine_monitoring_mobile",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mProblemImageUri);
+                startActivityForResult(takePictureIntent, REQUEST_CAPTURE_PROBLEM_IMAGE);
+            }
+        }
+    }
+
+    private void takeSolutionImageWithCamera() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_CAPTURE_SOLUTION_IMAGE);
+        }
+    }
+
+
+    private File createImageFile() throws IOException {
+        String currentPhotoPath;
+
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    private void pickProblemPictureFromGallery() {
         Intent i = new Intent();
         i.setType("image/*");
         i.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(i, PICK_PROBLEM_IMAGE);
     }
 
-    private void takeSolutionPicture() {
+    private void pickSolutionPictureFromGallery() {
         Intent i = new Intent();
         i.setType("image/*");
         i.setAction(Intent.ACTION_GET_CONTENT);
@@ -163,13 +221,12 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
     }
 
     private void uploadReport() {
-        chronometer.stop();
-        final String repairDuration = chronometer.getText().toString();
-        final String uploadID = mDatabaseReportRef.push().getKey();
-        final String currentUploadTime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault()).format(new Date());
-
 
         if (mProblemImageUri != null && mSolutionImageUri != null) {
+            chronometer.stop();
+            final String repairDuration = chronometer.getText().toString();
+            final String uploadID = mDatabaseReportRef.push().getKey();
+            final String currentUploadTime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault()).format(new Date());
 
             final StorageReference problemFileReference = mStorageRef.child(System.currentTimeMillis()
                     + "." + getFileExtension(mProblemImageUri));
@@ -277,9 +334,9 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
             }
 
         } else if (id == R.id.ivProblemPicture) {
-            takeProblemPicture();
+            pickProblemPictureFromGallery();
         } else if (id == R.id.ivSolutionPicture) {
-            takeSolutionPicture();
+            pickSolutionPictureFromGallery();
         }
     }
 
@@ -287,14 +344,30 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_PROBLEM_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
+        if (requestCode == REQUEST_CAPTURE_PROBLEM_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             mProblemImageUri = data.getData();
 
             Picasso.get()
                     .load(mProblemImageUri)
                     .into(ivProblemPicture);
-        }
-        if (requestCode == PICK_SOLUTION_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
+
+            //            Bundle extras = data.getExtras();
+//            Bitmap imageBitmap = (Bitmap) extras.get("data");
+//            ivProblemPicture.setImageBitmap(imageBitmap);
+
+        } else if (requestCode == REQUEST_CAPTURE_SOLUTION_IMAGE && resultCode == RESULT_OK && data != null && data.getExtras() != null) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            ivSolutionPicture.setImageBitmap(imageBitmap);
+
+        } else if (requestCode == PICK_PROBLEM_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            mProblemImageUri = data.getData();
+
+            Picasso.get()
+                    .load(mProblemImageUri)
+                    .into(ivProblemPicture);
+
+        } else if (requestCode == PICK_SOLUTION_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             mSolutionImageUri = data.getData();
 
             Picasso.get()

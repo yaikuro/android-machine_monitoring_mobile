@@ -3,7 +3,11 @@
     package="com.app.android_machine_monitoring_mobile">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+
+    <!--    Makes sure that the device has a camera-->
+    <uses-feature android:name="android.hardware.camera.any" />
 
     <application
         android:name=".shared.Notification"
@@ -12,6 +16,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.app.android_machine_monitoring_mobile"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
         <activity android:name=".DetailedReportHistoryActivity" />
         <activity android:name=".ReportHistoryActivity" />
         <activity android:name=".RepairBreakdownActivity" />
