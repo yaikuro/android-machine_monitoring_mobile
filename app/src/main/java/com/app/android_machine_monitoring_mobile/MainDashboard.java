@@ -131,12 +131,15 @@ public class MainDashboard extends BaseActivity implements View.OnClickListener 
                 assert user != null;
                 txtWelcomeUser.setText(getString(R.string.stringWelcome, user.getNickname()));
 
-                Picasso.get()
-                        .load(user.getUserProfilePictureUrl())
-                        .fit()
-                        .centerCrop()
-                        .into(ivUserProfilePicture);
-
+                if (user.getUserProfilePictureUrl() == null) {
+                    ivUserProfilePicture.setImageResource(R.drawable.ic_person_black_24dp);
+                } else {
+                    Picasso.get()
+                            .load(user.getUserProfilePictureUrl())
+                            .fit()
+                            .centerCrop()
+                            .into(ivUserProfilePicture);
+                }
                 container.stopShimmer();
                 container.setShimmer(null);
             }

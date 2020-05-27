@@ -98,17 +98,24 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
 
                 user = dataSnapshot.getValue(User.class);
 
+                assert user != null;
                 txtHiUser.setText(getString(R.string.stringHi, user.getNickname()));
                 txtUserProfileName.setText(user.getFullName());
                 txtUserProfileEmail.setText(user.getEmail());
                 txtUserProfileMobilePhoneNumber.setText(user.getMobilePhoneNumber());
                 txtUserProfileUid.setText(uid);
 
-                Picasso.get()
-                        .load(user.getUserProfilePictureUrl())
-                        .fit()
-                        .centerCrop()
-                        .into(ivUserProfilePicture);
+                if (user.getUserProfilePictureUrl() == null) {
+                    ivUserProfilePicture.setImageResource(R.drawable.ic_person_black_24dp);
+                } else {
+                    Picasso.get()
+                            .load(user.getUserProfilePictureUrl())
+                            .fit()
+                            .centerCrop()
+                            .into(ivUserProfilePicture);
+
+                    Log.d(TAG, "onDataChange: " + user.getUserProfilePictureUrl());
+                }
             }
 
             @Override
