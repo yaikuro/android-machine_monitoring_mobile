@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="5dp"
+    android:gravity="center_horizontal|center_vertical"
+    android:orientation="vertical"
     tools:context=".LoginActivity">
 
     <com.google.android.material.textview.MaterialTextView
@@ -14,11 +17,7 @@
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="40sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/materialEditTextID"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textStyle="bold" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/materialEditTextID"
@@ -30,13 +29,7 @@
         app:boxCornerRadiusBottomEnd="20dp"
         app:boxCornerRadiusBottomStart="20dp"
         app:boxCornerRadiusTopEnd="20dp"
-        app:boxCornerRadiusTopStart="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.333">
+        app:boxCornerRadiusTopStart="20dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etID"
@@ -58,10 +51,7 @@
         app:boxCornerRadiusBottomEnd="20dp"
         app:boxCornerRadiusBottomStart="20dp"
         app:boxCornerRadiusTopEnd="20dp"
-        app:boxCornerRadiusTopStart="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialEditTextID">
+        app:boxCornerRadiusTopStart="20dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etPassword"
@@ -78,10 +68,7 @@
         android:indeterminate="true"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="?attr/actionBarSize" />
+        android:visibility="invisible" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSignInEmail"
@@ -89,18 +76,14 @@
         android:layout_height="wrap_content"
         android:text="@string/sign_in"
         android:textSize="15sp"
-        app:cornerRadius="17dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialEditTextPassword"
-        app:layout_constraintVertical_bias="0.205" />
+        app:cornerRadius="17dp" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/materialTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:layout_marginBottom="30dp"
         android:text="@string/or"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -112,14 +95,9 @@
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="60dp"
         android:layout_height="70dp"
+        android:layout_marginBottom="30dp"
         android:drawableLeft="@drawable/google_icon_resized"
-        app:cornerRadius="70dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialTextView"
-        app:layout_constraintVertical_bias="0.347" />
+        app:cornerRadius="70dp" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/materialTextViewRegister"
@@ -127,12 +105,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:text="@string/don_t_have_an_account"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSignInGoogle" />
+        android:textColor="@color/black" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/txtRegister"
@@ -141,12 +114,7 @@
         android:layout_marginTop="12dp"
         android:text="@string/register"
         android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.056"
-        app:layout_constraintStart_toEndOf="@id/materialTextViewRegister"
-        app:layout_constraintTop_toBottomOf="@+id/btnSignInGoogle" />
+        android:textStyle="bold" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
