@@ -14,10 +14,6 @@ public class Machine {
 
     public Machine(String machineLine, String machineStation, String machineID, String machineName, String machineStatus, String machineBreakdownTime) {
 
-        if (machineBreakdownTime.trim().equals("")) {
-            machineBreakdownTime = "None";
-        }
-
         this.machineLine = machineLine;
         this.machineStation = machineStation;
         this.machineID = machineID;

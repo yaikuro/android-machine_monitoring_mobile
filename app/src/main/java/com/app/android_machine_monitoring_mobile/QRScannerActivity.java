@@ -23,7 +23,7 @@ public class QRScannerActivity extends BaseActivity implements ZXingScannerView.
     private String machineLine;
     private String machineStation;
     private String machineID;
-    private String machineName;
+    private String machineBreakdownTime;
     private String qrCodeVerification;
     private String qrCodeResult;
 
@@ -49,6 +49,7 @@ public class QRScannerActivity extends BaseActivity implements ZXingScannerView.
         machineLine = getIntent().getStringExtra("machineLine");
         machineStation = getIntent().getStringExtra("machineStation");
         machineID = getIntent().getStringExtra("machineID");
+        machineBreakdownTime = getIntent().getStringExtra("machineBreakdownTime");
 
         // Initialize QR code
         ViewGroup contentFrame = findViewById(R.id.content_frame);
@@ -102,7 +103,7 @@ public class QRScannerActivity extends BaseActivity implements ZXingScannerView.
     }
 
     private void goto_RepairBreakdownActivity() {
-        String currentResponseTime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault()).format(new Date());
+        String currentResponseTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
 
         // Set selected breakdown machine status to "Repairing"
         mDatabaseMachineRef.child("Line " + machineLine).child(machineID).child("machineStatus").setValue("3");
@@ -111,7 +112,7 @@ public class QRScannerActivity extends BaseActivity implements ZXingScannerView.
         i.putExtra("machineLine", machineLine);
         i.putExtra("machineStation", machineStation);
         i.putExtra("machineID", machineID);
-//                i.putExtra("machineName", machineName);
+        i.putExtra("machineBreakdownTime", machineBreakdownTime);
         i.putExtra("currentResponseTime", currentResponseTime);
         startActivity(i);
         finish();

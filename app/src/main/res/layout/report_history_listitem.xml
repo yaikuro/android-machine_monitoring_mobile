@@ -34,19 +34,26 @@
                 style="@style/reportTextView" />
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtStringReportPIC"
+                style="@style/reportTextView"
+                android:text="@string/pic" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtStringReportBreakdownTime"
+                style="@style/reportTextView"
+                android:text="@string/breakdown_time" />
+
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/txtStringReportResponseTime"
                 style="@style/reportTextView"
-                android:text="@string/reponse_time" />
+                android:text="@string/response_time" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/txtStringReportUploadTime"
                 android:text="@string/upload_time"
                 style="@style/reportTextView" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/txtStringReportPIC"
-                style="@style/reportTextView"
-                android:text="@string/pic" />
+
 
         </LinearLayout>
 
@@ -81,6 +88,10 @@
                 android:id="@+id/doubledot6"
                 style="@style/reportDoubleDot" />
 
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/doubledot7"
+                style="@style/reportDoubleDot" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -101,15 +112,19 @@
                 style="@style/reportTextView" />
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtReportPIC"
+                style="@style/reportTextView" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtReportBreakdownTime"
+                style="@style/reportTextView" />
+
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/txtReportResponseTime"
                 style="@style/reportTextView" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/txtReportUploadTime"
-                style="@style/reportTextView" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/txtReportPIC"
                 style="@style/reportTextView" />
 
         </LinearLayout>

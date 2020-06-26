@@ -71,6 +71,7 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
     private String machineLine;
     private String machineStation;
     private String machineID;
+    private String machineBreakdownTime;
     private String currentResponseTime;
     private String currentPhotoPath;
     private TextView txtMachineInfo;
@@ -117,17 +118,15 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
         machineLine = getIntent().getStringExtra("machineLine");
         machineStation = getIntent().getStringExtra("machineStation");
         machineID = getIntent().getStringExtra("machineID");
+        machineBreakdownTime = getIntent().getStringExtra("machineBreakdownTime");
         currentResponseTime = getIntent().getStringExtra("currentResponseTime");
 
         // Start stopwatch
         chronometer = findViewById(R.id.chronometer);
         startChronometer();
 
-
         txtMachineInfo.setText(getString(R.string.stringMachineInfo, machineLine, machineStation, machineID));
         txtCurrentTimeResponse.setText(currentResponseTime);
-
-
     }
 
     private void uploadReport() {
@@ -136,7 +135,7 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
             chronometer.stop();
             final String repairDuration = chronometer.getText().toString();
             final String uploadID = mDatabaseReportRef.push().getKey();
-            final String currentUploadTime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault()).format(new Date());
+            final String currentUploadTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
 
             final StorageReference problemFileReference = mStorageRef.child(System.currentTimeMillis()
                     + "." + getFileExtension(mProblemImageUri));
@@ -165,7 +164,7 @@ public class RepairBreakdownActivity extends BaseActivity implements View.OnClic
 
                         assert downloadUri != null;
                         Report report = new Report(user.getFullName(), machineLine, machineStation, machineID, downloadUri.toString(), etProblemDescription.getText().toString(),
-                                currentResponseTime, currentUploadTime, repairDuration);
+                                machineBreakdownTime, currentResponseTime, currentUploadTime, repairDuration);
                         assert uploadID != null;
                         mDatabaseReportRef.child(uploadID).setValue(report);
                     } else {

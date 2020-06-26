@@ -11,6 +11,7 @@ public class Report {
     private String reportSolutionImageUrl;
     private String reportProblemImageDescription;
     private String reportSolutionImageDescription;
+    private String reportBreakdownTime;
     private String reportResponseTime;
     private String reportUploadTime;
     private String reportRepairDuration;
@@ -22,7 +23,7 @@ public class Report {
     }
 
     public Report(String reportPIC, String reportMachineLine, String reportMachineStation, String reportMachineID, String reportImageUrl, String reportProblemImageDescription,
-                  String reportResponseTime, String reportUploadTime, String reportRepairDuration) {
+                  String reportBreakdownTime, String reportResponseTime, String reportUploadTime, String reportRepairDuration) {
 
         if (reportProblemImageDescription.trim().equals("")) {
             reportProblemImageDescription = "No description";
@@ -36,6 +37,7 @@ public class Report {
         this.reportProblemImageDescription = reportProblemImageDescription;
 //        this.reportSolutionImageUrl = reportSolutionImageUrl;
 //        this.reportSolutionImageDescription = reportSolutionImageDescription;
+        this.reportBreakdownTime = reportBreakdownTime;
         this.reportResponseTime = reportResponseTime;
         this.reportUploadTime = reportUploadTime;
         this.reportRepairDuration = reportRepairDuration;
@@ -103,6 +105,14 @@ public class Report {
 
     public void setReportSolutionImageDescription(String reportSolutionImageDescription) {
         this.reportSolutionImageDescription = reportSolutionImageDescription;
+    }
+
+    public String getReportBreakdownTime() {
+        return reportBreakdownTime;
+    }
+
+    public void setReportBreakdownTime(String reportBreakdownTime) {
+        this.reportBreakdownTime = reportBreakdownTime;
     }
 
     public String getReportResponseTime() {

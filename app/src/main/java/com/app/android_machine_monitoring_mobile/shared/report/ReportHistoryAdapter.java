@@ -40,6 +40,7 @@ public class ReportHistoryAdapter extends RecyclerView.Adapter<ReportHistoryAdap
         holder.txtReportLine.setText(reportCurrent.getReportMachineLine());
         holder.txtReportStation.setText(reportCurrent.getReportMachineStation());
         holder.txtReportID.setText(reportCurrent.getReportMachineID());
+        holder.txtReportBreakdownTime.setText(reportCurrent.getReportBreakdownTime());
         holder.txtReportResponseTime.setText(reportCurrent.getReportResponseTime());
         holder.txtReportUploadTime.setText(reportCurrent.getReportUploadTime());
         holder.txtReportPIC.setText(reportCurrent.getReportPIC());
@@ -67,6 +68,7 @@ public class ReportHistoryAdapter extends RecyclerView.Adapter<ReportHistoryAdap
         public TextView txtReportLine;
         public TextView txtReportStation;
         public TextView txtReportID;
+        public TextView txtReportBreakdownTime;
         public TextView txtReportResponseTime;
         public TextView txtReportUploadTime;
         public TextView txtReportPIC;
@@ -77,6 +79,7 @@ public class ReportHistoryAdapter extends RecyclerView.Adapter<ReportHistoryAdap
             txtReportLine = itemView.findViewById(R.id.txtReportLine);
             txtReportStation = itemView.findViewById(R.id.txtReportStation);
             txtReportID = itemView.findViewById(R.id.txtReportID);
+            txtReportBreakdownTime = itemView.findViewById(R.id.txtReportBreakdownTime);
             txtReportResponseTime = itemView.findViewById(R.id.txtReportResponseTime);
             txtReportUploadTime = itemView.findViewById(R.id.txtReportUploadTime);
             txtReportPIC = itemView.findViewById(R.id.txtReportPIC);
