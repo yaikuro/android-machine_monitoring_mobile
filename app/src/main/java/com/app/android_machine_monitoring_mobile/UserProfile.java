@@ -105,7 +105,7 @@ public class UserProfile extends BaseActivity implements View.OnClickListener {
                 txtUserProfileMobilePhoneNumber.setText(user.getMobilePhoneNumber());
                 txtUserProfileUid.setText(uid);
 
-                if (user.getUserProfilePictureUrl() == null) {
+                if (user.getUserProfilePictureUrl() == null || user.getUserProfilePictureUrl().equals("")) {
                     ivUserProfilePicture.setImageResource(R.drawable.ic_person_black_24dp);
                 } else {
                     Picasso.get()

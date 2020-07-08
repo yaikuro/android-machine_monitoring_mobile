@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Machine Monitoring Mobile</string>
+    <string name="app_name">Mobile Machine Monitoring</string>
     <string name="id">ID</string>
     <string name="password">Password</string>
     <string name="sign_up">Sign Up</string>

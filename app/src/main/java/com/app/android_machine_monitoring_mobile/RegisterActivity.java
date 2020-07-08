@@ -89,7 +89,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                         hideProgressBar();
                     }
                 });
-        // [END create_user_with_email]
+
     } // End of signUpEmail()
 
     private void writeNewUser(String email, String fullName, String nickname, String mobilePhoneNumber) {
